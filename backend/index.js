@@ -19,7 +19,11 @@ app.get('/ping', (req, res)=>{
 })
 
 app.use(bodyParser.json());
-app.use(cors()); //// Enable CORS (allow cross-origin requests)
+app.use(cors({
+    origin: 'https://deploy-admin-mern-app-frontend.vercel.app', // Replace with your frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+})); //// Enable CORS (allow cross-origin requests)
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parses URL-encoded payloads
 app.use('/auth', AuthRouter);
