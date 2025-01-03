@@ -153,11 +153,11 @@ function Registration() {
       const result = await response.json();
       const { success, message, error } = result;
       
-      if (success) {
+      if (success) {        
         handleSuccess(message);
         setTimeout(() => {
-          navigate('https://deploy-admin-mern-app-1.vercel.app/employee');
-        }, 1000);
+          navigate('/employee');
+        }, 5000);
       } else if (error) {
         const details = error?.details[0].message;
         handleError(details);
