@@ -141,7 +141,7 @@ function Registration() {
     setIsSubmitting(true);  // Disable submit button
 
     try {
-      const url = "http://localhost:8080/auth/registration";
+      const url = "https://deploy-admin-mern-app-1.vercel.app/auth/registration";
       const response = await fetch(url, {
         method: "POST",      
         body: formData,

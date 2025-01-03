@@ -71,7 +71,7 @@ useEffect(() => {
   useEffect(() => {
     Modal.setAppElement('#root');  // Ensure the element exists
     // Fetch data from the Node.js backend API
-    axios.get('http://localhost:8080/auth/employee')
+    axios.get('https://deploy-admin-mern-app-1.vercel.app/auth/employee')
       .then(response => {
         setUsers(response.data);
         setLoading(false); // Data fetched successfully
@@ -145,7 +145,7 @@ useEffect(() => {
     e.preventDefault();
    const id = row._id;
    try {
-    const url = "http://localhost:8080/auth/editemployee";
+    const url = "https://deploy-admin-mern-app-1.vercel.app/auth/editemployee";
       const response = await fetch(url, {
         method: "POST",      
         headers: {
@@ -212,7 +212,7 @@ useEffect(() => {
     formData.append("city", city); 
     formData.append("id", id);
     try {
-      const url = 'http://localhost:8080/auth/updateemployee';
+      const url = 'https://deploy-admin-mern-app-1.vercel.app/auth/updateemployee';
       const response = await fetch(url, {
         method: "POST",      
         headers: {
@@ -247,13 +247,13 @@ useEffect(() => {
 
     // Handle 'View Image' button click (open in new window)
     const viewImage = (row) => {
-      const imageUrl = `http://localhost:8080/public/photo/${row.photo}`;
+      const imageUrl = `https://deploy-admin-mern-app-1.vercel.app/public/photo/${row.photo}`;
       window.open(imageUrl, '_blank'); // Open the image in a new tab/window
     };
 
     // Handle 'View Image' button click (open in new window)
     const viewDoc = (row) => {
-      const docUrl = `http://localhost:8080/public/document/${row.file}`;
+      const docUrl = `https://deploy-admin-mern-app-1.vercel.app/public/document/${row.file}`;
       window.open(docUrl, '_blank'); // Open the image in a new tab/window
     };
 
