@@ -152,7 +152,7 @@ function Registration() {
       }
       const result = await response.json();
       const { success, message, error } = result;
-      
+      console.log(response.success);
       if (success) {        
         handleSuccess(message);
         setTimeout(() => {
