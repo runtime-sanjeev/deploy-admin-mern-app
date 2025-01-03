@@ -35,7 +35,7 @@ const Sidebar = () => {
                     <li><a href="/employee">Employee List</a></li>
                     <li><a href="/registration">Add Employee</a></li>
                     <li><a href="/signup">Add Admin User</a></li>
-                    <li><a href="/reports">Reports</a></li>
+                    <li><a href="/report">Reports</a></li>
                     <li><button  className='buttonLog' onClick={handleLogout}>Logout</button></li>
                     {/* Add more sidebar menu items here */}
                 </ul>
