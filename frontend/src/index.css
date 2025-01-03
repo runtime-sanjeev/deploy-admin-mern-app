@@ -1,0 +1,420 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+*, ::before, ::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+
+}
+html, body {
+  height: 100%;
+  width: 100%;
+  background-color: cadetblue;
+}
+body {
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+}
+.container {  
+  padding: 32px 48px;
+  border-radius: 10px;
+  background-color: #fff;
+  width: 100%;
+  max-width: 700px;
+  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  margin: 0 auto;
+  justify-content: center;  align-items: center;
+  margin-top: 50px;
+}
+
+.container > h1{
+  margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+.container >form{
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.container div{
+  display: flex;
+  flex-direction: column;
+}
+
+.container input{
+  width: 100%;
+  font-size: 12px;
+  padding: 10px;
+  border: none;
+  outline: none;
+}
+.containers input, select{
+  width: 100%;
+  font-size: 14px;
+  padding: 10px;
+  border: none;
+  outline: none;
+}
+
+.container input::placeholder{
+  font-size: 12px;
+  font-style: italic;
+}
+
+.buttonLog{
+  background-color: purple;
+  border: none;
+  font-size: 15px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  /* margin: 10px 0; */
+  cursor: pointer;
+  /* margin-left: 20px; */
+}
+.btncls {
+  background-color: purple;
+  border: none;
+  font-size: 20px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+.textChange {
+  text-transform: capitalize;
+}
+
+
+.tblcontainer {
+  /* margin-top: 40px;
+  margin-left: 180px;
+  padding: 32px 48px;
+  border-radius: 10px; */
+  background-color: #fff;
+  width: 100%;
+  max-width: 1000px;
+  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  /* margin: 0 auto; */
+}
+
+/* .tblcontainer >h1 {
+  
+} */
+.empheader {
+  text-align: center;
+  padding: 20px;
+  font-weight: bold;
+}
+.btnedt {
+  background-color: purple;
+  border: none;
+  font-size: 20px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+/* Style to center the loading gif */
+.loading-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Optional: semi-transparent background */
+  z-index: 999; /* Ensure the loading state is on top of other content */
+  flex-direction: column;
+}
+
+.loading-gif {
+  width: 100px; /* Adjust the size of the GIF */
+  height: auto;
+}
+
+.loading-container p {
+  color: white;
+  font-size: 1.5rem;
+  margin-top: 20px;
+}
+/* Modal overlay styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Modal content styles */
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 600px; /* Limit the max width */
+  width: 90%; /* Make modal responsive */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+/* Modal header styles */
+.modal-content h2 {
+  margin-top: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+/* Modal content details */
+.modal-content p {
+  font-size: 16px;
+  color: #555;
+}
+
+/* Close button styles */
+.modal-content button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.modal-content button:hover {
+  background-color: #0056b3;
+}
+.modal-content input {
+  width: 100%;
+  font-size: 12px;
+  padding: 10px;
+  border: none;
+  outline: none;
+}
+
+.text-sms {
+  font-size: 0.675rem;
+  line-height: 1rem;
+}
+
+/* Header */
+.header {
+  background-color: #af4c4c;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.header h1 {
+  font-size: 2rem;
+}
+
+.header p {
+  font-size: 1rem;
+}
+
+/* Sidebar */
+.content-container {
+  display: flex;
+  flex: 1;
+}
+
+.sidebar {
+  width: 100%;
+  max-width: 250px;
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 10px 0;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: #333;
+  font-size: 1rem;
+}
+
+.sidebar a:hover {
+  color: #4CAF50;
+}
+.main_content {
+  width: 80%;
+  padding: 40px;
+  position: relative;
+  margin-left: 0;
+}
+
+/* Container */
+.reg_container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+.reg_container > h1 {
+  text-align: center;
+  color: #333;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+/* Form styling */
+.reg_container > form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Input fields */
+input[type="text"],
+input[type="date"],
+input[type="email"],
+input[type="password"],
+select,
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border 0.3s ease-in-out;
+}
+
+/* Focused input field */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+select:focus,
+input[type="file"]:focus {
+  border-color: #5C6BC0; /* Blue shade */
+  outline: none;
+}
+
+/* Label styling */
+label {
+  font-size: 16px;
+  color: #444;
+  font-weight: 600;
+}
+
+/* Error message */
+.error-message {
+  color: red;
+  font-size: 14px;
+}
+
+/* File input preview */
+.preview-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Preview image */
+.preview-container img {
+  width: 150px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Submit Button */
+button[type="submit"] {
+  background-color: #5C6BC0; /* Blue background */
+  color: white;
+  font-size: 16px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+/* Hover effect on submit button */
+button[type="submit"]:hover {
+  background-color: hsl(143, 96%, 44%); /* Darker blue on hover */
+}
+
+/* Disabled state for submit button */
+button[type="submit"]:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+/* File input styling */
+input[type="file"] {
+  display: inline-block;
+  padding: 5px 15px;
+}
+
+.btn-upd {
+  margin-left: 50px;
+}
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .container {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  form {
+    gap: 15px;
+  }
+
+  input[type="text"],
+  input[type="date"],
+  select,
+  input[type="file"] {
+    font-size: 14px;
+  }
+}
+
+.success-message {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.failed-message {
+  background-color: #f10606;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
