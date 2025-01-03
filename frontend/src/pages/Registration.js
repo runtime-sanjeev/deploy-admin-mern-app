@@ -156,7 +156,7 @@ function Registration() {
       if (success) {
         handleSuccess(message);
         setTimeout(() => {
-          navigate('/employee');
+          navigate('https://deploy-admin-mern-app-1.vercel.app/employee');
         }, 1000);
       } else if (error) {
         const details = error?.details[0].message;
