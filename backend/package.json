@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "type": "commonjs",
-  "proxy": "http://localhost:8080",
+  "proxy": "https://deploy-admin-mern-app-1.vercel.app",
   "scripts": {
     "start": "nodemon index.js"
   },
