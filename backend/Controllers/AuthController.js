@@ -105,7 +105,7 @@ const registration = async (req, res) => {
     // const photo = req.photo; 
     const photo = req.files?.photo ? req.files.photo[0] : null;
 
-
+    
     if (!file) {
       return res.status(400).json({ message: 'No file uploaded', success: false });
     }
@@ -116,7 +116,8 @@ const registration = async (req, res) => {
       empname, fname, mname, mobile, sex, city, state, dob, file: file.filename,
       photo: photo.filename, name, sid
     });
-    // console.log(regnModel);      
+    // console.log(regnModel);  
+    console.log('Registration Model:', regnModel);    
     await regnModel.save();
     res.status(201).json({ message: 'Employee Record Added', success: true });
   } catch (err) {
