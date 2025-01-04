@@ -20,7 +20,7 @@ function Registration() {
     file: null
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [previewImage, setPreviewImage] = useState(null);
+  // const [previewImage, setPreviewImage] = useState(null);
   const navigate = useNavigate();
 
   // Handle Document file change
@@ -43,31 +43,31 @@ function Registration() {
 
   // Handle Image file change
 
-  const handleImageChange = (e) => {
-    const selectedPhoto = e.target.files[0];
-    if (!selectedPhoto) return;
+  // const handleImageChange = (e) => {
+  //   const selectedPhoto = e.target.files[0];
+  //   if (!selectedPhoto) return;
     
-    const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    const maxFileSize = 5 * 1024 * 1024;
+  //   const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+  //   const maxFileSize = 5 * 1024 * 1024;
     
-    if (!allowedImageTypes.includes(selectedPhoto.type)) {
-      return handleError('Please upload a valid image file (JPEG, PNG, GIF).');
-    }
-    if (selectedPhoto.size > maxFileSize) {
-      return handleError('File size exceeds the 5MB limit.');
-    }
+  //   if (!allowedImageTypes.includes(selectedPhoto.type)) {
+  //     return handleError('Please upload a valid image file (JPEG, PNG, GIF).');
+  //   }
+  //   if (selectedPhoto.size > maxFileSize) {
+  //     return handleError('File size exceeds the 5MB limit.');
+  //   }
   
-    setRegnInfo(prev => ({
-      ...prev,
-      photo: selectedPhoto,
-    }));
+  //   setRegnInfo(prev => ({
+  //     ...prev,
+  //     photo: selectedPhoto,
+  //   }));
   
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPreviewImage(reader.result);
-    };
-    reader.readAsDataURL(selectedPhoto);
-  };
+  //   const reader = new FileReader();
+  //   reader.onloadend = () => {
+  //     setPreviewImage(reader.result);
+  //   };
+  //   reader.readAsDataURL(selectedPhoto);
+  // };
   
 
   
@@ -109,7 +109,7 @@ function Registration() {
     const { empname, fname, mname, mobile, dob, sex,state, city } = regnInfo;
 
     // Check if required fields are filled
-    if (!empname || !fname || !mname || !mobile || !dob || !sex || !state || !city ) {
+    if (!empname || !fname || !mname || !mobile || !dob || !sex || !state || !city  ) {
       const missingFields = [];
       if (!empname) missingFields.push('Name');
       if (!fname) missingFields.push('Father Name');
@@ -256,7 +256,7 @@ function Registration() {
             onChange={handleChange}
           />
         </div>
-        <div>
+        {/* <div>
         {previewImage && (
           <div>
             <h3>Preview Image:</h3>
@@ -273,15 +273,15 @@ function Registration() {
             name="photo"
             onChange={handleImageChange}
           />
-        </div>
+        </div> */}
         
         {/* <div>
           <label>Upload Document</label>
           <input type="file" name='file' onChange={onFileChange}  />
-        </div>
+        </div> */}
         <button type='submit' className='btncls' disabled={isSubmitting}>
           {isSubmitting ? 'Submitting...' : 'Submit'}
-        </button> */}
+        </button>
         {/* <button onClick={handleLogout} className='buttonLog'>Logout</button> */}
       </form>
       <ToastContainer />
