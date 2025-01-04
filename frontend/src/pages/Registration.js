@@ -20,54 +20,54 @@ function Registration() {
     file: null
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [previewImage, setPreviewImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
   const navigate = useNavigate();
 
   // Handle Document file change
 
-  // const onFileChange = (e) => {
-  //   const file = e.target.files[0];
-  //   const allowedFileTypes = ['application/pdf', 'application/msword'];
-  //   const maxFileSize = 5 * 1024 * 1024; // 5MB file size limit
-  //   if (file && !allowedFileTypes.includes(file.type)) {
-  //     return handleError('Please upload a valid document (PDF, DOC).');
-  //   }
-  //   if ((file && file.size > maxFileSize)) {
-  //     return handleError('File size exceeds the 5MB limit.');
-  //   }
-  //   setRegnInfo(prev => ({
-  //     ...prev,
-  //     file: file,  // Update the file property
-  //   }));
-  // };
+  const onFileChange = (e) => {
+    const file = e.target.files[0];
+    const allowedFileTypes = ['application/pdf', 'application/msword'];
+    const maxFileSize = 5 * 1024 * 1024; // 5MB file size limit
+    if (file && !allowedFileTypes.includes(file.type)) {
+      return handleError('Please upload a valid document (PDF, DOC).');
+    }
+    if ((file && file.size > maxFileSize)) {
+      return handleError('File size exceeds the 5MB limit.');
+    }
+    setRegnInfo(prev => ({
+      ...prev,
+      file: file,  // Update the file property
+    }));
+  };
 
   // Handle Image file change
 
-  // const handleImageChange = (e) => {
-  //   const selectedPhoto = e.target.files[0];
-  //   if (!selectedPhoto) return;
+  const handleImageChange = (e) => {
+    const selectedPhoto = e.target.files[0];
+    if (!selectedPhoto) return;
     
-  //   const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
-  //   const maxFileSize = 5 * 1024 * 1024;
+    const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    const maxFileSize = 5 * 1024 * 1024;
     
-  //   if (!allowedImageTypes.includes(selectedPhoto.type)) {
-  //     return handleError('Please upload a valid image file (JPEG, PNG, GIF).');
-  //   }
-  //   if (selectedPhoto.size > maxFileSize) {
-  //     return handleError('File size exceeds the 5MB limit.');
-  //   }
+    if (!allowedImageTypes.includes(selectedPhoto.type)) {
+      return handleError('Please upload a valid image file (JPEG, PNG, GIF).');
+    }
+    if (selectedPhoto.size > maxFileSize) {
+      return handleError('File size exceeds the 5MB limit.');
+    }
   
-  //   setRegnInfo(prev => ({
-  //     ...prev,
-  //     photo: selectedPhoto,
-  //   }));
+    setRegnInfo(prev => ({
+      ...prev,
+      photo: selectedPhoto,
+    }));
   
-  //   const reader = new FileReader();
-  //   reader.onloadend = () => {
-  //     setPreviewImage(reader.result);
-  //   };
-  //   reader.readAsDataURL(selectedPhoto);
-  // };
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreviewImage(reader.result);
+    };
+    reader.readAsDataURL(selectedPhoto);
+  };
   
 
   
@@ -106,21 +106,21 @@ function Registration() {
   // Handle registration form submission
   const handleRegn = async (e) => {
     e.preventDefault();
-    const { empname, fname, mname, mobile, dob, sex,state, city } = regnInfo;
+    const { empname, fname, mname, mobile, file, dob, sex,state, city, photo } = regnInfo;
 
     // Check if required fields are filled
-    if (!empname || !fname || !mname || !mobile || !dob || !sex || !state || !city  ) {
+    if (!empname || !fname || !mname || !mobile || !dob || !sex || !state || !city  || !file || !photo) {
       const missingFields = [];
       if (!empname) missingFields.push('Name');
       if (!fname) missingFields.push('Father Name');
       if (!mname) missingFields.push('Mother Name');
       if (!mobile) missingFields.push('Mobile No');
-      // if (!file) missingFields.push('Document');
+      if (!file) missingFields.push('Document');
       if (!sex) missingFields.push('sex');
       if (!dob) missingFields.push('dob');
       if (!state) missingFields.push('state');
       if (!city) missingFields.push('city');
-      // if (!photo) missingFields.push('Photo');
+      if (!photo) missingFields.push('Photo');
       return handleError(`${missingFields.join(', ')} are required.`);
     }
 
@@ -131,12 +131,12 @@ function Registration() {
     formData.append('fname', fname);
     formData.append('mname', mname);
     formData.append('mobile', mobile);
-    // formData.append('file', file);
+    formData.append('file', file);
     formData.append("dob", dob);
     formData.append("sex", sex);
     formData.append("state", state);
     formData.append("city", city);
-    // formData.append("photo", photo);
+    formData.append("photo", photo);
 
     setIsSubmitting(true);  // Disable submit button
 
@@ -256,7 +256,7 @@ function Registration() {
             onChange={handleChange}
           />
         </div>
-        {/* <div>
+        <div>
         {previewImage && (
           <div>
             <h3>Preview Image:</h3>
@@ -273,12 +273,12 @@ function Registration() {
             name="photo"
             onChange={handleImageChange}
           />
-        </div> */}
+        </div>
         
-        {/* <div>
+        <div>
           <label>Upload Document</label>
           <input type="file" name='file' onChange={onFileChange}  />
-        </div> */}
+        </div>
         <button type='submit' className='btncls' disabled={isSubmitting}>
           {isSubmitting ? 'Submitting...' : 'Submit'}
         </button>

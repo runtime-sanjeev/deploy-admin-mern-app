@@ -101,22 +101,22 @@ const registration = async (req, res) => {
   try {
     const { name, empname, fname, mname, mobile, sid, sex, city, state, dob } = req.body;
     // const file = req.file; 
-    // const file = req.files?.file ? req.files.file[0] : null;
+    const file = req.files?.file ? req.files.file[0] : null;
     // const photo = req.photo; 
-    // const photo = req.files?.photo ? req.files.photo[0] : null;
+    const photo = req.files?.photo ? req.files.photo[0] : null;
 
-    
-    // if (!file) {
-    //   return res.status(400).json({ message: 'No file uploaded', success: false });
-    // }
-    // if (!photo) {
-    //   return res.status(400).json({ message: 'No Image uploaded', success: false });
-    // }
+
+    if (!file) {
+      return res.status(400).json({ message: 'No file uploaded', success: false });
+    }
+    if (!photo) {
+      return res.status(400).json({ message: 'No Image uploaded', success: false });
+    }
     const regnModel = new RegistrationModel({
-      empname, fname, mname, mobile, sex, city, state, dob, name, sid
+      empname, fname, mname, mobile, sex, city, state, dob, file: file.filename,
+      photo: photo.filename, name, sid
     });
-    // console.log(regnModel);  
-    console.log('Registration Model:', regnModel);    
+    // console.log(regnModel);      
     await regnModel.save();
     res.status(201).json({ message: 'Employee Record Added', success: true });
   } catch (err) {
