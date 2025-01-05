@@ -148,9 +148,12 @@ function Registration() {
       });
       console.log(response)
       if (!response.ok) {
+        const errorDetails = await response.text(); // Capture the response body to check for error details
+        console.error('Server Error:', errorDetails);
         throw new Error('Network response was not ok');
       }
       const result = await response.json();
+      console.log(result);
       const { success, message, error } = result;
       console.log(response.success);
       if (success) {        
@@ -165,6 +168,7 @@ function Registration() {
         handleError(message);
       }
     } catch (err) {
+      console.error('Error during registration request:', err.message); // Log the error message
       handleError("An error occurred during registration. Please try again.");
     } finally {
       setIsSubmitting(false);  // Re-enable submit button after the request
