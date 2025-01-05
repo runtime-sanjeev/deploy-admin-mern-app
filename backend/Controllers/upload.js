@@ -7,7 +7,7 @@ const storage = multer.diskStorage(
   {
   
   destination: (req, file, cb) => {
-    // console.log(file);
+    console.log(file);
     if(file.fieldname == 'file'){
       cb(null, 'public/document/');  // Path where files are stored
     }else{
@@ -16,7 +16,7 @@ const storage = multer.diskStorage(
     
   },
   filename: (req, file, cb) => {
-    // console.log(file);
+    console.log(file);
     if(file.fieldname == 'file'){
       cb(null, Date.now() + path.extname(file.originalname));  // Unique filename
     }else{
