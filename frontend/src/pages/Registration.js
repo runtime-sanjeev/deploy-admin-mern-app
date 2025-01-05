@@ -106,6 +106,7 @@ function Registration() {
   // Handle registration form submission
   const handleRegn = async (e) => {
     e.preventDefault();
+    alert('ff');
     const { empname, fname, mname, mobile, file, dob, sex,state, city, photo } = regnInfo;
 
     // Check if required fields are filled
