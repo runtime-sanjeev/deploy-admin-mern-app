@@ -97,6 +97,7 @@ const signup = async (req, res) => {
 /* Registration */
 
 const registration = async (req, res) => {
+  console.log('received', req.body);
   try {
     console.log('Received request for registration');
     const { name, empname, fname, mname, mobile, sid, sex, city, state, dob } = req.body;
