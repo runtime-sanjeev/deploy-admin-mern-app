@@ -125,7 +125,7 @@ const registration = async (req, res) => {
     console.log('Employee record added successfully');
     res.status(201).json({ message: 'Employee Record Added', success: true });
   } catch (err) {
-    console.error('Error during registration process:', err.stack);  // Log stack trace
+    console.error('Error during registrationssss process:', err.stack);  // Log stack trace
     res.status(500).json({ message: 'Failed to add record, Please try again', success: false, error: err.message });
   }
 };
