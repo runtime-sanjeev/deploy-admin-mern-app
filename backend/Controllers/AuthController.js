@@ -97,33 +97,31 @@ const signup = async (req, res) => {
 /* Registration */
 
 const registration = async (req, res) => {
-  //  console.log(req.body);
   try {
     const { name, empname, fname, mname, mobile, sid, sex, city, state, dob } = req.body;
-    // const file = req.file; 
     const file = req.files?.file ? req.files.file[0] : null;
-    // const photo = req.photo; 
     const photo = req.files?.photo ? req.files.photo[0] : null;
-    console.log('Files:', req.files);
-console.log('Body:', req.body);
 
     if (!file) {
       return res.status(400).json({ message: 'No file uploaded', success: false });
     }
     if (!photo) {
-      return res.status(400).json({ message: 'No Image uploaded', success: false });
+      return res.status(400).json({ message: 'No image uploaded', success: false });
     }
+
     const regnModel = new RegistrationModel({
       empname, fname, mname, mobile, sex, city, state, dob, file: file.filename,
       photo: photo.filename, name, sid
     });
-    console.log(regnModel);      
+
     await regnModel.save();
     res.status(201).json({ message: 'Employee Record Added', success: true });
   } catch (err) {
-    res.status(500).json({ message: 'Failed to add record, Plese try again', success: false });
+    console.error("Error in registration:", err); // Log the error for debugging
+    res.status(500).json({ message: 'Failed to add record, Please try again', success: false });
   }
-}
+};
+
 
 
 const employee = async (req, res) => {
