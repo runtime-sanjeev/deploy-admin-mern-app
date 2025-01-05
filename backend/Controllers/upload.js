@@ -9,9 +9,9 @@ const storage = multer.diskStorage(
   destination: (req, file, cb) => {
     // console.log(file);
     if(file.fieldname == 'file'){
-      cb(null, 'public/document/');  // Path where files are stored
+      cb(null, 'backend/public/document/');  // Path where files are stored
     }else{
-      cb(null, 'public/photo/');  // Path where files are stored
+      cb(null, 'backend/public/photo/');  // Path where files are stored
     }
     
   },
