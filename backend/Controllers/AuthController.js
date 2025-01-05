@@ -97,7 +97,7 @@ const signup = async (req, res) => {
 /* Registration */
 
 const registration = async (req, res) => {
-  //  console.log(req.body);
+   console.log(req.body);
   try {
     const { name, empname, fname, mname, mobile, sid, sex, city, state, dob } = req.body;
     // const file = req.file; 
@@ -116,7 +116,7 @@ const registration = async (req, res) => {
       empname, fname, mname, mobile, sex, city, state, dob, file: file.filename,
       photo: photo.filename, name, sid
     });
-    // console.log(regnModel);      
+    console.log(regnModel);      
     await regnModel.save();
     res.status(201).json({ message: 'Employee Record Added', success: true });
   } catch (err) {
