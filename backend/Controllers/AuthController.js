@@ -97,14 +97,15 @@ const signup = async (req, res) => {
 /* Registration */
 
 const registration = async (req, res) => {
-   console.log(req.body);
+  //  console.log(req.body);
   try {
     const { name, empname, fname, mname, mobile, sid, sex, city, state, dob } = req.body;
     // const file = req.file; 
     const file = req.files?.file ? req.files.file[0] : null;
     // const photo = req.photo; 
     const photo = req.files?.photo ? req.files.photo[0] : null;
-
+    console.log('Files:', req.files);
+console.log('Body:', req.body);
 
     if (!file) {
       return res.status(400).json({ message: 'No file uploaded', success: false });

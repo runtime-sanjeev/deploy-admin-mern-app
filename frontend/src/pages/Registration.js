@@ -106,7 +106,6 @@ function Registration() {
   // Handle registration form submission
   const handleRegn = async (e) => {
     e.preventDefault();
-    // alert('ff');
     const { empname, fname, mname, mobile, file, dob, sex,state, city, photo } = regnInfo;
 
     // Check if required fields are filled
@@ -144,18 +143,14 @@ function Registration() {
     try {
       const url = "https://deploy-admin-mern-app-1.vercel.app/auth/registration";
       const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(regnInfo)
+        method: "POST",      
+        body: formData,
       });
-      
+      console.log(response)
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const result = await response.json();
-      console.log(result)
       const { success, message, error } = result;
       console.log(response.success);
       if (success) {        
