@@ -311,8 +311,6 @@ useEffect(() => {
         columns={columns}
         data={users}  // Use users array directly for data
         pagination // Enable pagination
-        paginationPerPage={10} // Show 10 records per page
-        paginationRowsPerPageOptions={[10, 20, 50]} // Allow users to select rows per page
         fixedHeader // Fix the table header at the top
         selectableRows // Allow row selection
         highlightOnHover // Highlight rows on hover
