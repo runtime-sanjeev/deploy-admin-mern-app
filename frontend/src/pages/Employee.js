@@ -310,7 +310,7 @@ useEffect(() => {
         // title="Employee Data"
         columns={columns}
         data={users}  // Use users array directly for data
-        pagination // Enable pagination
+        pagination={false} // Enable pagination
         fixedHeader // Fix the table header at the top
         selectableRows // Allow row selection
         highlightOnHover // Highlight rows on hover
