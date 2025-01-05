@@ -35,9 +35,9 @@ const path = require('path');
 // module.exports = upload;
 
 
-const multer = require('multer');
-const fs = require('fs');
-const path = require('path');
+// const multer = require('multer');
+// const fs = require('fs');
+// const path = require('path');
 
  
 const storage = multer.diskStorage({
