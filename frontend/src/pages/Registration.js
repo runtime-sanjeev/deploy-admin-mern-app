@@ -142,10 +142,13 @@ function Registration() {
     setIsSubmitting(true);  // Disable submit button
 
     try {
-      const url = "https://deploy-admin-mern-app-frontend.vercel.app/registration";
+      const url = "https://deploy-admin-mern-app-1.vercel.app/auth/registration";
       const response = await fetch(url, {
-        method: "POST",      
-        body: formData,
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
       });
       
       if (!response.ok) {
