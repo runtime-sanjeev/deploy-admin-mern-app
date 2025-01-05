@@ -106,7 +106,7 @@ function Registration() {
   // Handle registration form submission
   const handleRegn = async (e) => {
     e.preventDefault();
-    alert('ff');
+    // alert('ff');
     const { empname, fname, mname, mobile, file, dob, sex,state, city, photo } = regnInfo;
 
     // Check if required fields are filled
@@ -142,7 +142,7 @@ function Registration() {
     setIsSubmitting(true);  // Disable submit button
 
     try {
-      const url = "https://deploy-admin-mern-app-1.vercel.app/auth/registration";
+      const url = "https://deploy-admin-mern-app-frontend.vercel.app/registration";
       const response = await fetch(url, {
         method: "POST",      
         body: formData,
