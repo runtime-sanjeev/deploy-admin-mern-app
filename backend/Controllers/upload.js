@@ -3,28 +3,17 @@ const fs = require('fs');
 const path = require('path');
 
  
-const storage = multer.diskStorage(
-  {
-  
+const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    console.log(file);
-    if(file.fieldname == 'file'){
-      cb(null, 'public/document/');  // Path where files are stored
-    }else{
-      cb(null, 'public/photo/');  // Path where files are stored
-    }
-    
+    const dir = file.fieldname === 'file' ? '/tmp/document/' : '/tmp/photo/';
+    fs.mkdirSync(dir, { recursive: true });
+    cb(null, dir);
   },
   filename: (req, file, cb) => {
-    console.log(file);
-    if(file.fieldname == 'file'){
-      cb(null, Date.now() + path.extname(file.originalname));  // Unique filename
-    }else{
-      cb(null, Date.now() + path.extname(file.originalname));  // Unique filename
-    }
-    
-  }
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
 });
+
 
 // Initialize multer with storage configuration
 const upload = multer({ storage: storage }).fields([
