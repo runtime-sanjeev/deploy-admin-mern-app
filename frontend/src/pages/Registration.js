@@ -148,7 +148,7 @@ function Registration() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(regnInfo)
       });
       
       if (!response.ok) {
