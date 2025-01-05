@@ -310,11 +310,11 @@ useEffect(() => {
         // title="Employee Data"
         columns={columns}
         data={users}  // Use users array directly for data
-        pagination
-  paginationPerPage={10} // Default rows per page
-  paginationRowsPerPageOptions={[10, 20, 50, 100]} // Dropdown options
-  highlightOnHover
-  fixedHeader
+        pagination // Enable pagination
+        fixedHeader // Fix the table header at the top
+        selectableRows // Allow row selection
+        highlightOnHover // Highlight rows on hover
+        responsive // Make the table responsive
       />
 
       {/* Modal to display selected employee data */}
