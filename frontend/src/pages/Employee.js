@@ -19,8 +19,6 @@ function Employee() {
   const [loggedSid, setloggedSid] = useState('');
   const [successMessage, setSuccessMessage] = useState(''); // To store the success message
   const [errorMessage, setErrorMessage] = useState(''); // To store the success message
-  const [searchTerm, setSearchTerm] = useState(''); // Search input state
-  const [filteredUsers, setFilteredUsers] = useState([]); // Filtered list for the search bar
 
 
     const [updateInfo, setUpdateInfo] = useState({
@@ -35,19 +33,13 @@ function Employee() {
       id: ""
     });
     const navigate = useNavigate();
-    const handleSuccess = (message) => {
+  const handleSuccess = (message) => {
       setSuccessMessage(message); // Store the success message in state
-     };
+  };
 
-    const handleError = (message) => {
+  const handleError = (message) => {
     setErrorMessage(message); // Store the success message in state
-    };
-
-    const [pagination, setPagination] = useState({
-      currentPage: 1,
-      totalPages: 1,
-      itemsPerPage: 10,
-    });
+};
 
  useEffect(() => {
     const storedUserData = JSON.parse(localStorage.getItem('user'));
@@ -78,57 +70,12 @@ useEffect(() => {
     [name]: value.toUpperCase(),
   }));
 };
-
-// Search functionality
-const handleSearch = (event) => {
-  const value = event.target.value.toLowerCase();
-  setSearchTerm(value);
-
-  const filteredData = users.filter((user) =>
-    [user.empname, user.fname, user.mname, user.mobile]
-      .join(' ')
-      .toLowerCase()
-      .includes(value)
-  );
-  setFilteredUsers(filteredData);
-
-  // Reset pagination when searching
-  setPagination((prev) => ({
-    ...prev,
-    currentPage: 1,
-    totalPages: Math.ceil(filteredData.length / prev.itemsPerPage),
-  }));
-};
-
- // Paginate displayed data
- const paginateData = () => {
-  const { currentPage, itemsPerPage } = pagination;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  return filteredUsers.slice(startIndex, endIndex);
-};
-
-// Handle pagination navigation
-const handlePageChange = (newPage) => {
-  setPagination((prev) => ({
-    ...prev,
-    currentPage: newPage,
-  }));
-};
   useEffect(() => {
     Modal.setAppElement('#root');  // Ensure the element exists
     // Fetch data from the Node.js backend API
     axios.get('https://deploy-admin-mern-app-1.vercel.app/auth/employee')
       .then(response => {
-        const users = Array.isArray(response.data) ? response.data : [];
-        setUsers(users);
-        setFilteredUsers(users); // Initialize filteredUsers
-
-       
-        setPagination((prev) => ({
-          ...prev,
-          totalPages: Math.ceil(users.length / prev.itemsPerPage),
-        }));
+        setUsers(response.data);
         setLoading(false); // Data fetched successfully
       })
       .catch(error => {
@@ -357,44 +304,18 @@ const handlePageChange = (newPage) => {
         )}
         <div className="tblcontainer">       
          <div className='empheader'>
-            <h1 className=''>Employee Details</h1>   
-            <input
-                type="text"
-                placeholder="Search..."
-                className="search-bar"
-                value={searchTerm}
-                onChange={handleSearch}
-              />                  
+            <h1 className=''>Employee Details</h1>                     
          </div>
       <DataTable
         // title="Employee Data"
         columns={columns}
-        data={paginateData()}
-        pagination={false} // Use custom pagination
-        fixedHeader
-        highlightOnHover
-        
+        data={users}  // Use users array directly for data
+        pagination // Enable pagination
+        fixedHeader // Fix the table header at the top
+        selectableRows // Allow row selection
+        highlightOnHover // Highlight rows on hover
+        responsive // Make the table responsive
       />
-      
-      <div className="pagination-controls">
-              <button
-                onClick={() => handlePageChange(Math.max(1, pagination.currentPage - 1))}
-                disabled={pagination.currentPage === 1}
-              >
-                Previous
-              </button>
-              <span>
-                Page {pagination.currentPage} of {pagination.totalPages}
-              </span>
-              <button
-                onClick={() =>
-                  handlePageChange(Math.min(pagination.totalPages, pagination.currentPage + 1))
-                }
-                disabled={pagination.currentPage === pagination.totalPages}
-              >
-                Next
-              </button>
-            </div>
 
       {/* Modal to display selected employee data */}
       {selectedEmployee && (
