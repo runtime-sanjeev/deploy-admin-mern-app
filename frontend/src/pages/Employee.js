@@ -5,7 +5,7 @@ import  Modal  from 'react-modal';
 // import { handleError } from '../utils';
 import Sidebar from '../component/sidebar';
 import Header from '../component/header';
-import { data, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 // Set the app element for the modal
@@ -321,7 +321,7 @@ useEffect(() => {
         highlightOnHover // Highlight rows on hover
         responsive // Make the table responsive
         paginationServer
-        paginationTotalRows={data} // Set total number of rows (from API)
+        // paginationTotalRows={data} // Set total number of rows (from API)
         onChangePage={(page) => setCurrentPage(page)}
         onChangeRowsPerPage={(currentRowsPerPage, currentPage) => {
           setRowsPerPage(currentRowsPerPage);
