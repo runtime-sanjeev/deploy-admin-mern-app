@@ -231,7 +231,7 @@ function Employee() {
           {errorMessage && <div className="error-message">{errorMessage}</div>}
           <DataTable
             columns={columns}
-            data={users}
+            data={Array.isArray(users) ? users : []}  // Ensure data is an array
             pagination
             fixedHeader
             selectableRows
