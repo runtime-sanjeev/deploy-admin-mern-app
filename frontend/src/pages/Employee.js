@@ -122,9 +122,11 @@ const handlePageChange = (newPage) => {
       .then(response => {
         setUsers(response.data);
         setFilteredUsers(response.data); // Initialize filteredUsers
+
+        const userData = Array.isArray(response.data) ? response.data : [];
         setPagination((prev) => ({
           ...prev,
-          totalPages: Math.ceil(response.data.length / prev.itemsPerPage),
+          totalPages: Math.ceil(userData.length / prev.itemsPerPage),
         }));
         setLoading(false); // Data fetched successfully
       })
