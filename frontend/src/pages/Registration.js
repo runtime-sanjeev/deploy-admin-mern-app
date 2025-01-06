@@ -160,7 +160,7 @@ function Registration() {
         handleSuccess(message);
         setTimeout(() => {
           navigate('/employee');
-        }, 5000);
+        }, 2000);
       } else if (error) {
         const details = error?.details[0].message;
         handleError(details);
