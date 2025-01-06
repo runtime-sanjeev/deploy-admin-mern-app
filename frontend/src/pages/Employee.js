@@ -370,6 +370,7 @@ const handlePageChange = (newPage) => {
         pagination={false} // Use custom pagination
         fixedHeader
         highlightOnHover
+        paginationRowsPerPageOptions={[5, 10, 15]} // Options for rows per page
       />
       
       <div className="pagination-controls">
