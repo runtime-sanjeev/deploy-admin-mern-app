@@ -19,44 +19,6 @@ function Employee() {
   const [loggedSid, setloggedSid] = useState('');
   const [successMessage, setSuccessMessage] = useState(''); // To store the success message
   const [errorMessage, setErrorMessage] = useState(''); // To store the success message
-  const [paginationMetadata, setPaginationMetadata] = useState({
-    currentPage: 1,
-    totalPages: 1,
-    totalRecords: 0,
-    pageSize: 10,
-  });
-
-  const handleNextPage = () => {
-    if (paginationMetadata.currentPage < paginationMetadata.totalPages) {
-      const nextPage = paginationMetadata.currentPage + 1;
-      fetchEmployeeData(nextPage);
-    }
-  };
-  
-  const handlePreviousPage = () => {
-    if (paginationMetadata.currentPage > 1) {
-      const previousPage = paginationMetadata.currentPage - 1;
-      fetchEmployeeData(previousPage);
-    }
-  };
-  
-  // Fetch employee data with page number (for pagination)
-  const fetchEmployeeData = (page) => {
-    setLoading(true);
-    axios
-      .get(`https://deploy-admin-mern-app-1.vercel.app/auth/employee?page=${page}`)
-      .then((response) => {
-        const { data, metadata } = response.data;
-        setUsers(data);
-        setPaginationMetadata(metadata);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError('Error fetching data');
-        setLoading(false);
-      });
-  };
-  
 
 
     const [updateInfo, setUpdateInfo] = useState({
@@ -112,23 +74,15 @@ useEffect(() => {
     Modal.setAppElement('#root');  // Ensure the element exists
     // Fetch data from the Node.js backend API
     axios.get('https://deploy-admin-mern-app-1.vercel.app/auth/employee')
-  .then(response => {
-    // Extract data and metadata from the response
-    const { data, metadata } = response.data;
-
-    // Set state for employees data
-    setUsers(data);
-
-    // Handle pagination metadata if needed
-    setPaginationMetadata(metadata);
-
-    setLoading(false); // Data fetched successfully
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error);
-    setError('Error fetching data'); // Set error message
-    setLoading(false); // End loading on error
-  });
+      .then(response => {
+        setUsers(response.data);
+        setLoading(false); // Data fetched successfully
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        setError('Error fetching data'); // Set error message
+        setLoading(false); // End loading on error
+      });
   }, []);
 
   // Columns to display in the table
@@ -362,17 +316,7 @@ useEffect(() => {
         highlightOnHover // Highlight rows on hover
         responsive // Make the table responsive
       />
-      <div>
-  <button onClick={handlePreviousPage} disabled={paginationMetadata.currentPage === 1}>
-    Previous
-  </button>
-  <button
-    onClick={handleNextPage}
-    disabled={paginationMetadata.currentPage === paginationMetadata.totalPages}
-  >
-    Next
-  </button>
-</div>
+
       {/* Modal to display selected employee data */}
       {selectedEmployee && (
         <Modal
