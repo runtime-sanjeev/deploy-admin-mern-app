@@ -72,6 +72,7 @@ function Employee() {
   useEffect(() => {
     axios.get('https://deploy-admin-mern-app-1.vercel.app/auth/employee')
       .then(response => {
+        console.log(response.data); 
         setUsers(response.data);
         setLoading(false);
       })
