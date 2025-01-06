@@ -28,6 +28,11 @@ app.use(express.json()); // Middleware to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parses URL-encoded payloads
 app.use('/auth', AuthRouter);
 app.use('/public', express.static(path.join(__dirname, 'public')));
+// Serve files from `/tmp/document` directory
+app.use('/public/document', express.static('/tmp/document'));
+
+// Serve files from `/tmp/photo` directory
+app.use('/public/photo', express.static('/tmp/photo'));
 app.listen(PORT, ()=> {
     console.log(`server is runing on ${PORT}`);
 })
