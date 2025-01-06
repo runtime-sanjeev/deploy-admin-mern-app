@@ -16,6 +16,10 @@ function Employee() {
   const [loggedSid, setLoggedSid] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [employees, setEmployees] = useState([]);
   const [updateInfo, setUpdateInfo] = useState({
     empname: '',
     fname: '',
@@ -34,6 +38,34 @@ function Employee() {
     setSuccessMessage(message);
   };
 
+    // Fetch paginated data from the API
+  const fetchEmployees = async (page, limit) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`https://deploy-admin-mern-app-1.vercel.app/auth/employee?page=${page}&limit=${limit}`);
+      setEmployees(response.data.data);
+      setTotalRecords(response.data.metadata.totalRecords);
+    } catch (error) {
+      console.error('Error fetching employees:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchEmployees(page, limit);
+  }, [page, limit]);
+
+  // Handle page change
+  const handlePageChange = page => {
+    setPage(page);
+  };
+
+  // Handle rows per page change
+  const handlePerRowsChange = async (newPerPage, page) => {
+    setLimit(newPerPage);
+    setPage(page);
+  };
   const handleError = (message) => {
     setErrorMessage(message);
   };
@@ -232,12 +264,13 @@ function Employee() {
           {errorMessage && <div className="error-message">{errorMessage}</div>}
           <DataTable
             columns={columns}
-            data={Array.isArray(users) ? users : []}  // Ensure data is an array
+            data={employees} // users are the fetched data
             pagination
-            fixedHeader
-            selectableRows
-            highlightOnHover
-            responsive
+            paginationServer
+            paginationTotalRows={totalRecords} // Set total records count from the API response
+            onChangePage={handlePageChange} // Handle page change
+            onChangeRowsPerPage={handlePerRowsChange} // Handle rows per page change
+            loading={loading} // Show loading indicator if needed
           />
           {/* Modal for editing employee */}
           {selectedEmployee && (
