@@ -1,120 +1,91 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
-import Modal from 'react-modal';
+import  Modal  from 'react-modal';
 // import { handleError } from '../utils';
 import Sidebar from '../component/sidebar';
 import Header from '../component/header';
 import { useNavigate } from 'react-router-dom';
 
+// Set the app element for the modal
+// Modal.setAppElement('#root'); 
+
 function Employee() {
   const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedEmployee, setSelectedEmployee] = useState(null);
-  const [loggedSid, setLoggedSid] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
-  const [totalRecords, setTotalRecords] = useState(0);
-  const [employees, setEmployees] = useState([]);
-  const [updateInfo, setUpdateInfo] = useState({
-    empname: '',
-    fname: '',
-    mname: '',
-    mobile: '',
-    dob: '',
-    sex: '',
-    state: '',
-    city: '',
-    id: ''
-  });
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true); // For loading state
+  const [error, setError] = useState(null); // For handling errors
+  const [modalIsOpen, setModalIsOpen] = useState(false); // State to control modal visibility
+  const [selectedEmployee, setSelectedEmployee] = useState(null); // Store the selected employee details
+  const [loggedSid, setloggedSid] = useState('');
+  const [successMessage, setSuccessMessage] = useState(''); // To store the success message
+  const [errorMessage, setErrorMessage] = useState(''); // To store the success message
 
-  // Success and error handlers
+
+    const [updateInfo, setUpdateInfo] = useState({
+      empname: '',
+      fname: '',
+      mname: '',
+      mobile: '',
+      dob: "",
+      sex: "",
+      state: "",
+      city: "",
+      id: ""
+    });
+    const navigate = useNavigate();
   const handleSuccess = (message) => {
-    setSuccessMessage(message);
+      setSuccessMessage(message); // Store the success message in state
   };
 
-    // Fetch paginated data from the API
-  const fetchEmployees = async (page, limit) => {
-    setLoading(true);
-    try {
-      const response = await axios.get(`https://deploy-admin-mern-app-1.vercel.app/auth/employee?page=${page}&limit=${limit}`);
-      setEmployees(response.data.data);
-      setTotalRecords(response.data.metadata.totalRecords);
-    } catch (error) {
-      console.error('Error fetching employees:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchEmployees(page, limit);
-  }, [page, limit]);
-
-  // Handle page change
-  const handlePageChange = page => {
-    setPage(page);
-  };
-
-  // Handle rows per page change
-  const handlePerRowsChange = async (newPerPage, page) => {
-    setLimit(newPerPage);
-    setPage(page);
-  };
   const handleError = (message) => {
-    setErrorMessage(message);
-  };
+    setErrorMessage(message); // Store the success message in state
+};
 
-  useEffect(() => {
+ useEffect(() => {
     const storedUserData = JSON.parse(localStorage.getItem('user'));
-    if (storedUserData) {
-      setLoggedSid(storedUserData.id);
+    if (storedUserData) {     
+      setloggedSid(storedUserData.id);
     }
   }, []);
 
-  // Disable scrolling when modal is open
-  useEffect(() => {
-    if (modalIsOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
+// Disable scrolling when modal is open
+useEffect(() => {
+  if (modalIsOpen) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = 'auto';
+  }
 
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [modalIsOpen]);
-
-  // Handle input changes for employee data update
-  const handleChange = (e) => {
-    e.preventDefault();
-    const { name, value } = e.target;
-    setUpdateInfo(prev => ({
-      ...prev,
-      [name]: value.toUpperCase(),
-    }));
+  return () => {
+    document.body.style.overflow = 'auto';
   };
+}, [modalIsOpen]);
 
-  // Fetch employee data
+ // Handle input changes
+ const handleChange = (e) => {
+  e.preventDefault();
+  const { name, value } = e.target;
+  setUpdateInfo(prev => ({
+    ...prev,
+    [name]: value.toUpperCase(),
+  }));
+};
   useEffect(() => {
+    Modal.setAppElement('#root');  // Ensure the element exists
+    // Fetch data from the Node.js backend API
     axios.get('https://deploy-admin-mern-app-1.vercel.app/auth/employee')
       .then(response => {
-        console.log(response.data); 
         setUsers(response.data);
-        setLoading(false);
+        setLoading(false); // Data fetched successfully
       })
       .catch(error => {
-        setError('Error fetching data');
-        setLoading(false);
+        console.error('Error fetching data:', error);
+        setError('Error fetching data'); // Set error message
+        setLoading(false); // End loading on error
       });
   }, []);
 
-  // Columns for DataTable
+  // Columns to display in the table
   const columns = [
     {
       name: 'Name',
@@ -123,65 +94,72 @@ function Employee() {
     },
     {
       name: 'Father Name',
-      selector: row => row.fname,
+      selector: row => row.fname, // Assuming 'fname' holds the position
       sortable: true,
     },
     {
       name: 'Mother Name',
-      selector: row => row.mname,
+      selector: row => row.mname, // Assuming 'fname' holds the position
       sortable: true,
-    },
+    }
+    ,
     {
       name: 'Mobile',
-      selector: row => row.mobile,
+      selector: row => row.mobile, 
       sortable: true,
-    },
+    },    
     {
       name: 'Uploaded Document',
       cell: (row) => (
-        <button onClick={() => viewDoc(row)} className="focus:outline-none text-white bg-green-700
-        hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-[0.675rem] px-5
-         py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">View Document</button>
+        <button type="button" onClick={() => viewDoc(row)} class="focus:outline-none text-white bg-green-700
+         hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-[0.675rem] px-5
+          py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">View Document</button>
       ),
-      sortable: false,
+      sortable: true,
     },
     {
       name: 'Uploaded Image',
       cell: (row) => (
-        <button onClick={() => viewImage(row)} className="focus:outline-none text-white
-        bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium 
-        rounded-lg text-[0.675rem] px-5 py-2.5 me-2 mb-2 dark:bg-green-600 
-        dark:hover:bg-green-700 dark:focus:ring-green-800">View Image</button>
+        <button type="button" onClick={() => viewImage(row)} class="focus:outline-none text-white
+         bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium 
+         rounded-lg text-[0.675rem] px-5 py-2.5 me-2 mb-2 dark:bg-green-600 
+         dark:hover:bg-green-700 dark:focus:ring-green-800">View Image</button>
+
       ),
-      sortable: false,
+      sortable: true,
     },
     {
       name: 'Action',
       cell: (row) => (
-        <button onClick={(e) => handleEdit(row, e)} className="btfocus:outline-none text-white bg-purple-700
-        hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg 
-        text-[0.675rem] px-5 py-2.5 me-2 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 
-        dark:focus:ring-purple-800nedt">Edit</button>
+        <button type="button" className="btfocus:outline-none text-white bg-purple-700
+         hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg 
+         text-[0.675rem] px-5 py-2.5 me-2 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 
+         dark:focus:ring-purple-800nedt" onClick={(e) => handleEdit(row, e)}>Edit</button>
       ),
       sortable: false,
     },
   ];
 
-  // Edit button functionality
+  
+
+  // Handle 'Edit button' button click
   const handleEdit = async (row, e) => {
     e.preventDefault();
-    const id = row._id;
-    try {
-      const url = "https://deploy-admin-mern-app-1.vercel.app/auth/editemployee";
+   const id = row._id;
+   try {
+    const url = "https://deploy-admin-mern-app-1.vercel.app/auth/editemployee";
       const response = await fetch(url, {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id })
+        method: "POST",      
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
       });
-      const data = await response.json();
+      const data = await response.json();     
+      // console.log(data);
       if (data) {
-        setSelectedEmployee(data);
-        setModalIsOpen(true);
+        setSelectedEmployee(data); // Store the fetched employee data
+        setModalIsOpen(true); // Open the modal to display employee data
         setUpdateInfo({
           empname: data.empname,
           fname: data.fname,
@@ -192,124 +170,224 @@ function Employee() {
           state: data.state,
           city: data.city,
           id: data._id,
-        });
-      } else {
-        handleError('Employee data not found');
+        }); // Populate the updateInfo state as well
+      }else{        
+      console.error('Employee data not found');
       }
-    } catch (error) {
-      handleError('Error during edit');
-    }
+      } catch (error) {
+        handleError('Error during edit:');   
+        console.error('An error occurred while fetching the employee details.'); 
+        
+      }
   };
 
-  // Modal update functionality
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    const { empname, fname, mname, mobile, dob, sex, state, city, id } = updateInfo;
-    if (!empname || !fname || !mname || !mobile || !dob || !sex || !state || !city) {
-      handleError('All fields are required');
-      return;
-    }
+  // Handle 'Update Button' click event
 
+  
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();   
+    const { empname, fname, mname, mobile, dob, sex,state, city, id } = updateInfo;    
+        // Check if required fields are filled
+        if (!empname || !fname || !mname || !mobile || !dob || !sex || !state || !city ) {
+          const missingFields = [];
+          if (!empname) missingFields.push('Name');
+          if (!fname) missingFields.push('Father Name');
+          if (!mname) missingFields.push('Mother Name');
+          if (!mobile) missingFields.push('Mobile No');          
+          if (!sex) missingFields.push('sex');
+          if (!dob) missingFields.push('dob');
+          if (!state) missingFields.push('state');
+          if (!city) missingFields.push('city');         
+          return handleError(`${missingFields.join(', ')} are required.`);
+        }
+    
     const formData = new FormData();
-    formData.append('empname', empname);
+    formData.append('empname', empname);    
     formData.append('sid', loggedSid);
     formData.append('fname', fname);
     formData.append('mname', mname);
-    formData.append('mobile', mobile);
-    formData.append('dob', dob);
-    formData.append('sex', sex);
-    formData.append('state', state);
-    formData.append('city', city);
-    formData.append('id', id);
-
+    formData.append('mobile', mobile);    
+    formData.append("dob", dob);
+    formData.append("sex", sex);
+    formData.append("state", state);
+    formData.append("city", city); 
+    formData.append("id", id);
     try {
       const url = 'https://deploy-admin-mern-app-1.vercel.app/auth/updateemployee';
       const response = await fetch(url, {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ updateInfo })
+        method: "POST",      
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ updateInfo }),
       });
+      // const data = response.status;
+      // console.log(response.status);
+    if (response.status === 200) {
+      handleSuccess('Employee details updated successfully');
+      // Optionally, reset the success message after a short delay
+      setTimeout(() => {setSuccessMessage('Employee details updated successfully'); navigate('/employee');}, 5000);
+      // return false;
+      // window.location.reload();
 
-      if (response.status === 200) {
-        handleSuccess('Employee details updated successfully');
-        setTimeout(() => {
-          setModalIsOpen(false);
-          navigate('/employee');
-        }, 2000);
-        setUsers(prevUsers => prevUsers.map(user => user._id === id ? { ...user, ...updateInfo } : user));
-      } else {
-        handleError('Something went wrong');
-      }
+      // setTimeout(() => {
+      //   navigate('/employee');
+      // }, 5000);
+
+      setModalIsOpen(false);
+      setUsers(prevUsers => prevUsers.map(user => 
+        user._id === id ? { ...user, ...updateInfo } : user
+      ));
+      
+      
+    } else {
+      handleError('Something went wrong while updating employee details');
+      setTimeout(() => setErrorMessage(''), 5000);
+    }
     } catch (error) {
       handleError('500 Internal Server Error');
     }
-  };
 
-  // View document functionality
-  const viewDoc = (row) => {
-    const docUrl = `https://deploy-admin-mern-app-1.vercel.app/public/document/${row.file}`;
-    window.open(docUrl, '_blank');
-  };
+  }
 
-  // View image functionality
-  const viewImage = (row) => {
-    const imageUrl = `https://deploy-admin-mern-app-1.vercel.app/public/photo/${row.photo}`;
-    window.open(imageUrl, '_blank');
-  };
 
-  // Loading and error handling
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
-  if (users.length === 0) return <div>No employee data available</div>;
+    // Handle 'View Image' button click (open in new window)
+    const viewImage = (row) => {
+      const imageUrl = `https://deploy-admin-mern-app-1.vercel.app/public/photo/${row.photo}`;
+      window.open(imageUrl, '_blank'); // Open the image in a new tab/window
+    };
+
+    // Handle 'View Image' button click (open in new window)
+    const viewDoc = (row) => {
+      const docUrl = `https://deploy-admin-mern-app-1.vercel.app/public/document/${row.file}`;
+      window.open(docUrl, '_blank'); // Open the image in a new tab/window
+    };
+
+  // Display loading or error message if data is not loaded
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <img src="https://i.gifer.com/Vp3R.gif" alt="Loading" className="loading-gif" />
+        <p>Loading...</p>
+      </div>      
+    );
+  }
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  // Handle empty data scenario
+  if (users.length === 0) {
+    return <div>No employee data available</div>;
+  }
 
   return (
+    
     <div>
-      <Header />
-      <div className="content-container">
-        <Sidebar />
-        <div className="main-content">
-          {successMessage && <div className="success-message">{successMessage}</div>}
-          {errorMessage && <div className="error-message">{errorMessage}</div>}
-          <DataTable
-            columns={columns}
-            data={employees} // users are the fetched data
-            pagination
-            paginationServer
-            paginationTotalRows={totalRecords} // Set total records count from the API response
-            onChangePage={handlePageChange} // Handle page change
-            onChangeRowsPerPage={handlePerRowsChange} // Handle rows per page change
-            loading={loading} // Show loading indicator if needed
-          />
-          {/* Modal for editing employee */}
-          {selectedEmployee && (
-            <Modal
-              isOpen={modalIsOpen}
-              onRequestClose={() => setModalIsOpen(false)}
-              contentLabel="Edit Employee"
-              className="modal-content"
-              overlayClassName="modal-overlay"
-            >
-              <form onSubmit={handleUpdate}>
-                <h2>Edit Employee Details</h2>
-                {/* Modal form for editing employee data */}
-                <div className="form-fields">
-                  <input type="text" name="empname" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' value={updateInfo.empname} onChange={handleChange} />
-                  <input type="text" name="fname" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' value={updateInfo.fname} onChange={handleChange} />
-                  <input type="text" name="mname" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' value={updateInfo.mname} onChange={handleChange} />
-                  <input type="text" name="mobile" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' value={updateInfo.mobile} onChange={handleChange} />
-                  <input type="date" name="dob" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' value={updateInfo.dob} onChange={handleChange} />
-                  <input type="text" name="sex" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' value={updateInfo.sex} onChange={handleChange} />
-                  <input type="text" name="state" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' value={updateInfo.state} onChange={handleChange} />
-                  <input type="text" name="city" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' value={updateInfo.city} onChange={handleChange} />
-                </div>
-                <button type="submit" className='btn-upd'>Update</button>
-                <button type="button" onClick={() => setModalIsOpen(false)}>Close</button>
-              </form>
-            </Modal>
-          )}
-        </div>
-      </div>
+        <Header/>  
+        <div className="content-container">
+        {/* Sidebar */}
+        <Sidebar/>
+        <aside className='main_content'>
+          {/* Conditionally render the success message */}
+        {successMessage && (
+          <div className="success-message">
+            <p>{successMessage}</p>
+          </div>
+        )}
+
+        {errorMessage && (
+          <div className="failed-message">
+            <p>{errorMessage}</p>
+          </div>
+        )}
+        <div className="tblcontainer">       
+         <div className='empheader'>
+            <h1 className=''>Employee Details</h1>                     
+         </div>
+      <DataTable
+        // title="Employee Data"
+        columns={columns}
+        data={users}  // Use users array directly for data
+        pagination // Enable pagination
+        fixedHeader // Fix the table header at the top
+        selectableRows // Allow row selection
+        highlightOnHover // Highlight rows on hover
+        responsive // Make the table responsive
+      />
+
+      {/* Modal to display selected employee data */}
+      {selectedEmployee && (
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={() => setModalIsOpen(false)} // Close modal
+          contentLabel="Employee Details"
+          className="modal-content"
+          overlayClassName="modal-overlay"
+          shouldCloseOnOverlayClick={false} // Prevent modal from closing on outside click
+        >
+          
+          <form onSubmit={handleUpdate}>
+          <h2 className='text-center'>Edit Employee Details</h2>
+          <div>            
+            <div className='mb-5'>
+            <div><label htmlFor='name' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>Name</label></div>
+            <div>              
+              <input type='text' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+               name='empname' id='empname' value={updateInfo.empname || ''} onChange={handleChange} />
+            </div>
+            </div>
+            <div className='mb-5'>
+            <div><label htmlFor='fathername' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>Father Name</label></div>
+            <div>              
+              <input type='text' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+               name='fname' id='sname' value={updateInfo.fname || ''} onChange={handleChange} />
+            </div>
+            </div>
+            <div className='mb-5'>
+            <div><label htmlFor='mothername' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>Mother Name</label></div>
+            <div>              
+              <input type='text' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+               name='mname' id='mname' value={updateInfo.mname || ''} onChange={handleChange} />
+            </div>
+            </div>
+            <div className='mb-5'>
+            <div><label htmlFor='mobile' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>Mobile No.</label></div>
+            <div>              
+              <input type='text' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+               name='mobile' id='mobile' value={updateInfo.mobile || ''} onChange={handleChange} />
+            </div>
+            </div>
+
+            <div className='mb-5'>
+            <div><label htmlFor='mobile' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>State.</label></div>
+            <div>              
+              <input type='text' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+               name='state' id='state' value={updateInfo.state || ''} onChange={handleChange} />
+            </div>
+            </div>
+            <div className='mb-5'>
+            <div><label htmlFor='mobile' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>City.</label></div>
+            <div>              
+              <input type='text' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+               name='city' id='city' value={updateInfo.city || ''} onChange={handleChange} />
+            </div>
+            </div>
+            
+          </div>
+          <button onClick={() => setModalIsOpen(false)}>Close</button>
+          <button type='submit' className='btn-upd'>Update</button>
+          </form>
+        </Modal>
+      )}
     </div>
+        </aside>
+        </div>
+      
+    </div>
+
+    
   );
 }
 
