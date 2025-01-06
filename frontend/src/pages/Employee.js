@@ -293,16 +293,16 @@ function Employee() {
                 <h2>Edit Employee Details</h2>
                 {/* Modal form for editing employee data */}
                 <div className="form-fields">
-                  <input type="text" name="empname" value={updateInfo.empname} onChange={handleChange} />
-                  <input type="text" name="fname" value={updateInfo.fname} onChange={handleChange} />
-                  <input type="text" name="mname" value={updateInfo.mname} onChange={handleChange} />
-                  <input type="text" name="mobile" value={updateInfo.mobile} onChange={handleChange} />
-                  <input type="date" name="dob" value={updateInfo.dob} onChange={handleChange} />
-                  <input type="text" name="sex" value={updateInfo.sex} onChange={handleChange} />
-                  <input type="text" name="state" value={updateInfo.state} onChange={handleChange} />
-                  <input type="text" name="city" value={updateInfo.city} onChange={handleChange} />
+                  <input type="text" name="empname" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' value={updateInfo.empname} onChange={handleChange} />
+                  <input type="text" name="fname" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' value={updateInfo.fname} onChange={handleChange} />
+                  <input type="text" name="mname" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' value={updateInfo.mname} onChange={handleChange} />
+                  <input type="text" name="mobile" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' value={updateInfo.mobile} onChange={handleChange} />
+                  <input type="date" name="dob" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' value={updateInfo.dob} onChange={handleChange} />
+                  <input type="text" name="sex" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' value={updateInfo.sex} onChange={handleChange} />
+                  <input type="text" name="state" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' value={updateInfo.state} onChange={handleChange} />
+                  <input type="text" name="city" className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' value={updateInfo.city} onChange={handleChange} />
                 </div>
-                <button type="submit">Update</button>
+                <button type="submit" className='btn-upd'>Update</button>
                 <button type="button" onClick={() => setModalIsOpen(false)}>Close</button>
               </form>
             </Modal>
