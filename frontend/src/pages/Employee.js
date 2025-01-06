@@ -5,7 +5,6 @@ import  Modal  from 'react-modal';
 // import { handleError } from '../utils';
 import Sidebar from '../component/sidebar';
 import Header from '../component/header';
-import { useNavigate } from 'react-router-dom';
 
 // Set the app element for the modal
 // Modal.setAppElement('#root'); 
@@ -32,7 +31,6 @@ function Employee() {
       city: "",
       id: ""
     });
-    const navigate = useNavigate();
   const handleSuccess = (message) => {
       setSuccessMessage(message); // Store the success message in state
   };
@@ -73,7 +71,7 @@ useEffect(() => {
   useEffect(() => {
     Modal.setAppElement('#root');  // Ensure the element exists
     // Fetch data from the Node.js backend API
-    axios.get('https://deploy-admin-mern-app-1.vercel.app/auth/employee')
+    axios.get('http://localhost:8080/auth/employee')
       .then(response => {
         setUsers(response.data);
         setLoading(false); // Data fetched successfully
@@ -147,7 +145,7 @@ useEffect(() => {
     e.preventDefault();
    const id = row._id;
    try {
-    const url = "https://deploy-admin-mern-app-1.vercel.app/auth/editemployee";
+    const url = "http://localhost:8080/auth/editemployee";
       const response = await fetch(url, {
         method: "POST",      
         headers: {
@@ -214,7 +212,7 @@ useEffect(() => {
     formData.append("city", city); 
     formData.append("id", id);
     try {
-      const url = 'https://deploy-admin-mern-app-1.vercel.app/auth/updateemployee';
+      const url = 'http://localhost:8080/auth/updateemployee';
       const response = await fetch(url, {
         method: "POST",      
         headers: {
@@ -227,14 +225,9 @@ useEffect(() => {
     if (response.status === 200) {
       handleSuccess('Employee details updated successfully');
       // Optionally, reset the success message after a short delay
-      setTimeout(() => {setSuccessMessage('Employee details updated successfully'); navigate('/employee');}, 5000);
+      setTimeout(() => setSuccessMessage(''), 5000);
       // return false;
       // window.location.reload();
-
-      // setTimeout(() => {
-      //   navigate('/employee');
-      // }, 5000);
-
       setModalIsOpen(false);
       setUsers(prevUsers => prevUsers.map(user => 
         user._id === id ? { ...user, ...updateInfo } : user
@@ -254,13 +247,13 @@ useEffect(() => {
 
     // Handle 'View Image' button click (open in new window)
     const viewImage = (row) => {
-      const imageUrl = `https://deploy-admin-mern-app-1.vercel.app/public/photo/${row.photo}`;
+      const imageUrl = `http://localhost:8080/public/photo/${row.photo}`;
       window.open(imageUrl, '_blank'); // Open the image in a new tab/window
     };
 
     // Handle 'View Image' button click (open in new window)
     const viewDoc = (row) => {
-      const docUrl = `https://deploy-admin-mern-app-1.vercel.app/public/document/${row.file}`;
+      const docUrl = `http://localhost:8080/public/document/${row.file}`;
       window.open(docUrl, '_blank'); // Open the image in a new tab/window
     };
 
