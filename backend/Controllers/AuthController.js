@@ -135,7 +135,7 @@ const registration = async (req, res) => {
 
 const employee = async (req, res) => {
   try {
-    const { page = 1, limit = 10 } = req.query; // Default to page 1 and 10 records per page
+    const { page = 1, limit = 20 } = req.query; // Default to page 1 and 10 records per page
     const skip = (page - 1) * limit; // Calculate the number of records to skip  
     //   const regnModels = new RegistrationModel();
     //   console.log(regnModels);
