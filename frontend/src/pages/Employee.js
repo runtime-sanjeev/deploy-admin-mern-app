@@ -19,8 +19,7 @@ function Employee() {
   const [loggedSid, setloggedSid] = useState('');
   const [successMessage, setSuccessMessage] = useState(''); // To store the success message
   const [errorMessage, setErrorMessage] = useState(''); // To store the success message
-  const [currentPage, setCurrentPage] = useState();
-  const [rowsPerPage, setRowsPerPage] = useState();
+
 
     const [updateInfo, setUpdateInfo] = useState({
       empname: '',
@@ -84,7 +83,7 @@ useEffect(() => {
         setError('Error fetching data'); // Set error message
         setLoading(false); // End loading on error
       });
-  }, [currentPage, rowsPerPage]);
+  }, []);
 
   // Columns to display in the table
   const columns = [
@@ -316,12 +315,6 @@ useEffect(() => {
         selectableRows // Allow row selection
         highlightOnHover // Highlight rows on hover
         responsive // Make the table responsive
-        paginationTotalRows={users}
-        onChangePage={(page) => setCurrentPage(page)}
-        onChangeRowsPerPage={(currentRowsPerPage, currentPage) => {
-          setRowsPerPage(currentRowsPerPage);
-          setCurrentPage(currentPage);
-        }}
       />
 
       {/* Modal to display selected employee data */}
