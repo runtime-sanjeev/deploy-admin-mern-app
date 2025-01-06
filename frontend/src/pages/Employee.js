@@ -5,7 +5,8 @@ import  Modal  from 'react-modal';
 // import { handleError } from '../utils';
 import Sidebar from '../component/sidebar';
 import Header from '../component/header';
-import { useNavigate } from 'react-router-dom';
+import { data, useNavigate } from 'react-router-dom';
+
 
 // Set the app element for the modal
 // Modal.setAppElement('#root'); 
@@ -19,7 +20,9 @@ function Employee() {
   const [loggedSid, setloggedSid] = useState('');
   const [successMessage, setSuccessMessage] = useState(''); // To store the success message
   const [errorMessage, setErrorMessage] = useState(''); // To store the success message
-
+   
+  const [currentPage, setCurrentPage] = useState(1);
+const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const [updateInfo, setUpdateInfo] = useState({
       empname: '',
@@ -32,10 +35,12 @@ function Employee() {
       city: "",
       id: ""
     });
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const handleSuccess = (message) => {
       setSuccessMessage(message); // Store the success message in state
   };
+
+
 
   const handleError = (message) => {
     setErrorMessage(message); // Store the success message in state
@@ -83,7 +88,7 @@ useEffect(() => {
         setError('Error fetching data'); // Set error message
         setLoading(false); // End loading on error
       });
-  }, []);
+  }, [currentPage, rowsPerPage]);
 
   // Columns to display in the table
   const columns = [
@@ -315,6 +320,13 @@ useEffect(() => {
         selectableRows // Allow row selection
         highlightOnHover // Highlight rows on hover
         responsive // Make the table responsive
+        paginationServer
+        paginationTotalRows={data} // Set total number of rows (from API)
+        onChangePage={(page) => setCurrentPage(page)}
+        onChangeRowsPerPage={(currentRowsPerPage, currentPage) => {
+          setRowsPerPage(currentRowsPerPage);
+          setCurrentPage(currentPage);
+        }}
       />
 
       {/* Modal to display selected employee data */}
