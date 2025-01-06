@@ -5,7 +5,6 @@ import  Modal  from 'react-modal';
 // import { handleError } from '../utils';
 import Sidebar from '../component/sidebar';
 import Header from '../component/header';
-import { useNavigate } from 'react-router-dom';
 
 // Set the app element for the modal
 // Modal.setAppElement('#root'); 
@@ -32,7 +31,6 @@ function Employee() {
       city: "",
       id: ""
     });
-    const navigate = useNavigate();
   const handleSuccess = (message) => {
       setSuccessMessage(message); // Store the success message in state
   };
@@ -227,14 +225,9 @@ useEffect(() => {
     if (response.status === 200) {
       handleSuccess('Employee details updated successfully');
       // Optionally, reset the success message after a short delay
-      setTimeout(() => {setSuccessMessage('Employee details updated successfully'); navigate('/employee');}, 5000);
+      setTimeout(() => setSuccessMessage(''), 5000);
       // return false;
       // window.location.reload();
-
-      // setTimeout(() => {
-      //   navigate('/employee');
-      // }, 5000);
-
       setModalIsOpen(false);
       setUsers(prevUsers => prevUsers.map(user => 
         user._id === id ? { ...user, ...updateInfo } : user
