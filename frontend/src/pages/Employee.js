@@ -120,10 +120,11 @@ const handlePageChange = (newPage) => {
     // Fetch data from the Node.js backend API
     axios.get('https://deploy-admin-mern-app-1.vercel.app/auth/employee')
       .then(response => {
-        setUsers(response.data);
-        setFilteredUsers(response.data); // Initialize filteredUsers
-
         const userData = Array.isArray(response.data) ? response.data : [];
+        setUsers(userData);
+        setFilteredUsers(userData); // Initialize filteredUsers
+
+       
         setPagination((prev) => ({
           ...prev,
           totalPages: Math.ceil(userData.length / prev.itemsPerPage),
