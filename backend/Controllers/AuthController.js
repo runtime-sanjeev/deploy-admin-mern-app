@@ -136,21 +136,38 @@ const registration = async (req, res) => {
 const employee = async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.query; // Default to page 1 and 10 records per page
-    const skip = (page - 1) * limit; // Calculate the number of records to skip  
-    //   const regnModels = new RegistrationModel();
-    //   console.log(regnModels);
-    const data = await RegistrationModel.find().skip(skip).limit(Number(limit)); // Fetch with pagination  
-    // If no data found, return an empty array (still 200 OK)
+    const skip = (page - 1) * limit; // Calculate the number of records to skip
+    
+    // Get the total number of records
+    const totalRecords = await RegistrationModel.countDocuments();
+    
+    // Fetch paginated data
+    const data = await RegistrationModel.find().skip(skip).limit(Number(limit));
+
+    // If no data is found, return an empty array with the total records
     if (data.length === 0) {
-      return res.status(200).json([]);
+      return res.status(200).json({
+        totalRecords,
+        data: [],
+      });
     }
-    res.json(data); // Send the data as the response
-    //   console.log('Employee Data:', data);  
+
+    // Send the response with data and total records
+    res.json({
+      totalRecords,
+      currentPage: Number(page),
+      totalPages: Math.ceil(totalRecords / limit),
+      data,
+    });
   } catch (err) {
     console.error('Error fetching data from Database:', err);
-    res.status(500).json({ message: 'Error fetching data from Database', error: err.message });
+    res.status(500).json({
+      message: 'Error fetching data from Database',
+      error: err.message,
+    });
   }
 };
+
 
 const editemployee = async (req, res) => {
   try {
