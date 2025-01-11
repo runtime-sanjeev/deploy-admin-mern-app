@@ -1,0 +1,86 @@
+/* Login.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #fff;
+  }
+  
+  .login-container {
+    width: 200%;
+    max-width: 400px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .login-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+  }
+  
+  .login-header {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+  }
+  
+  .login-form {
+    margin-bottom: 15px;
+  }
+  
+  .login-page-l {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 5px;
+  }
+  
+  .login-page-i {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: black;
+  }
+  
+  .login-page-i:focus {
+    outline: none;
+    box-shadow: 0px 0px 5px #2575fc;
+  }
+  
+  .login-page-b {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #2575fc;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .login-page-b:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+  
+  @media (max-width: 768px) {
+    .login-page-container {
+      max-width: 300px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .login-page-card {
+      padding: 20px;
+    }
+  }
+  

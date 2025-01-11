@@ -2,23 +2,92 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-*, ::before, ::after {
+
+/* *, ::before, ::after {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 
+} */
+.text-sm {
+  font-size: 0.65rem;
+    line-height: 1rem;
+    height: 86%;
 }
-html, body {
+.btn-ed {
+  height: 80%;
+  width: 100%;
+}
+/* html, body {
   height: 100%;
   width: 100%;
   background-color: cadetblue;
-}
+} */
 body {
   /* display: flex; */
+  height: 100%;
+  width: 100%;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(135deg, #2575fc, #2575fc);
 }
-.container {  
+.login-container {
+  padding: 32px 48px;
+  border-radius: 10px;
+  background-color: #fff;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  margin: 0 auto;
+  justify-content: center;  align-items: center;
+  margin-top: 100px;
+ background: linear-gradient(135deg, #6a11cb, #2575fc);
+}
+
+.login-container > h1{
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+}
+.login-container >form{
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.login-container div{
+  display: flex;
+  flex-direction: column;
+}
+.login-i{
+  width: 100%;
+  font-size: 12px;
+  padding: 10px;
+  border: none;
+  outline: none;
+}
+.login-l {
+  font-size: 14px;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.login-i {
+  padding: 0.8rem;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  transition: border-color 0.3s;
+}
+
+.logini:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+
+/* .container {  
   padding: 32px 48px;
   border-radius: 10px;
   background-color: #fff;
@@ -28,9 +97,9 @@ body {
   margin: 0 auto;
   justify-content: center;  align-items: center;
   margin-top: 50px;
-}
+} */
 
-.container > h1{
+/* .container > h1{
   margin-bottom: 20px;
     text-align: center;
     font-weight: bold;
@@ -44,7 +113,7 @@ body {
 .container div{
   display: flex;
   flex-direction: column;
-}
+} */
 
 .container input{
   width: 100%;
@@ -99,11 +168,23 @@ body {
   border-radius: 10px; */
   background-color: #fff;
   width: 100%;
-  max-width: 1000px;
+  max-width: 1100px;
   box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
   /* margin: 0 auto; */
 }
 
+.sc-jhZTHU {
+  display: none !important;
+}
+.kfEVfC {
+  visibility: hidden; /* Hide the original text */
+  position: relative; /* Create a positioning context */
+}
+.kfEVfC::after {
+  content: "Show Per Page"; /* Replace the text */
+  visibility: visible; /* Make the new text visible */
+ 
+}
 /* .tblcontainer >h1 {
   
 } */
@@ -111,6 +192,7 @@ body {
   text-align: center;
   padding: 20px;
   font-weight: bold;
+  background-color: darksalmon;
 }
 .btnedt {
   background-color: purple;
@@ -175,14 +257,14 @@ body {
 /* Modal header styles */
 .modal-content h2 {
   margin-top: 0;
-  font-size: 24px;
+  font-size: 18px;
   color: #333;
 }
 
 /* Modal content details */
 .modal-content p {
   font-size: 16px;
-  color: #555;
+  color: red;
 }
 
 /* Close button styles */
@@ -228,47 +310,18 @@ body {
   font-size: 1rem;
 }
 
-/* Sidebar */
-.content-container {
-  display: flex;
-  flex: 1;
-}
 
-.sidebar {
-  width: 100%;
-  max-width: 250px;
-  background-color: #f4f4f4;
-  padding: 20px;
-}
-
-.sidebar ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.sidebar li {
-  margin: 10px 0;
-}
-
-.sidebar a {
-  text-decoration: none;
-  color: #333;
-  font-size: 1rem;
-}
-
-.sidebar a:hover {
-  color: #4CAF50;
-}
 .main_content {
   width: 80%;
   padding: 40px;
   position: relative;
   margin-left: 0;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
 }
 
 /* Container */
 .reg_container {
-  max-width: 800px;
+  max-width: 500px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f9f9f9;
@@ -303,7 +356,7 @@ input[type="file"] {
   margin-top: 5px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 14px;
   transition: border 0.3s ease-in-out;
 }
 
@@ -320,9 +373,11 @@ input[type="file"]:focus {
 
 /* Label styling */
 label {
-  font-size: 16px;
+  font-size: 12px;
   color: #444;
   font-weight: 600;
+  max-width: 100%;
+  width: 100px;
 }
 
 /* Error message */
@@ -349,7 +404,7 @@ label {
 
 /* Submit Button */
 button[type="submit"] {
-  background-color: #5C6BC0; /* Blue background */
+  background-color: #5C6BC0; 
   color: white;
   font-size: 16px;
   padding: 12px 20px;
@@ -418,31 +473,3 @@ input[type="file"] {
   border-radius: 5px;
   text-align: center;
 }
-
-.search-bar {
-  margin-bottom: 10px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.pagination-controls {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
-.pagination-controls button {
-  padding: 5px 10px;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.pagination-controls button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-

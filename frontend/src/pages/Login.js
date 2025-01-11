@@ -37,7 +37,7 @@ function Login() {
     }  
 
     try {
-      const url = "https://deploy-admin-mern-app-1.vercel.app/auth/login";
+      const url = "http://localhost:8080/auth/login";
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -70,26 +70,28 @@ function Login() {
   };
 
   return (
-    <div className="container">
-      <h1>Admin Login</h1>
+    <div className="login-container">
+      <h1 className='login-h'>Admin Login</h1>
       <form onSubmit={handleLogin}>
         <div>
-          <label htmlFor="email">User</label>
+          <label htmlFor="email" className='login-l'>User</label>
           <input 
             type="email" 
             name="email" 
             id="email" 
+            className='login-i'
             value={loginInfo.email} 
             placeholder="Enter your email" 
             onChange={handleChange} 
           />
         </div>
         <div>
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password" className='login-l'>Password</label>
           <input 
             type="password" 
             name="password" 
             id="password" 
+            className='login-i'
             value={loginInfo.password} 
             placeholder="Enter your password" 
             onChange={handleChange} 
@@ -101,7 +103,7 @@ function Login() {
             onChange={onCaptchaChange}
           />
         </div> */}
-        <button type="submit" className="btncls" disabled={loading}>
+        <button type="submit" className="btncls login-b" disabled={loading}>
           {loading ? 'Logging in...' : 'Submit'}
         </button>
         {/* <span>New Here? <Link to="/signup">Sign Up</Link></span> */}
