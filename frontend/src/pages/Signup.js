@@ -81,10 +81,10 @@ function Signup() {
   return (
     <div>
       <Header/>
-      <div className='content-container'>
+      <div className='content-container flex'>
       <Sidebar/>
 
-       <aside className="main_content">
+       <aside className="main_content flex-1 p-4">
         <div className='reg_container'>
         <h1>Add Admin User</h1>
       <form onSubmit={handleSignup}>
