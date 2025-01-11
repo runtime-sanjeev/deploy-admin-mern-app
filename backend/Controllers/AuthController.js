@@ -1,5 +1,6 @@
 const UserModel = require('../Models/User')
 const RegistrationModel = require('../Models/Registration')
+const EmpData = require('../Models/employees')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 // const validator = require('validator');
@@ -65,7 +66,7 @@ const signup = async (req, res) => {
     const existingUser = await UserModel.findOne({ email });
     if (existingUser) {
       return res.status(409).json({
-        message: 'User already exists. You can log in instead.',
+        message: 'User already exists.',
         success: false
       });
     }
@@ -97,40 +98,32 @@ const signup = async (req, res) => {
 /* Registration */
 
 const registration = async (req, res) => {
-  console.log('received', req.body);
+  //  console.log(req.body);
   try {
-    console.log('Received request for registration');
     const { name, empname, fname, mname, mobile, sid, sex, city, state, dob } = req.body;
-
+    // const file = req.file; 
     const file = req.files?.file ? req.files.file[0] : null;
+    // const photo = req.photo; 
     const photo = req.files?.photo ? req.files.photo[0] : null;
 
+
     if (!file) {
-      console.log('No file uploaded');
       return res.status(400).json({ message: 'No file uploaded', success: false });
     }
-
     if (!photo) {
-      console.log('No photo uploaded');
-      return res.status(400).json({ message: 'No image uploaded', success: false });
+      return res.status(400).json({ message: 'No Image uploaded', success: false });
     }
-
-    console.log('Creating new registration record');
     const regnModel = new RegistrationModel({
       empname, fname, mname, mobile, sex, city, state, dob, file: file.filename,
       photo: photo.filename, name, sid
     });
-
+    // console.log(regnModel);      
     await regnModel.save();
-    console.log('Employee record added successfully');
     res.status(201).json({ message: 'Employee Record Added', success: true });
   } catch (err) {
-    console.error('Error during registrationssss process:', err.stack);  // Log stack trace
-    res.status(500).json({ message: 'Failed to add record, Please try again', success: false, error: err.message });
+    res.status(500).json({ message: 'Failed to add record, Plese try again', success: false });
   }
-};
-
-
+}
 
 
 const employee = async (req, res) => {
@@ -139,7 +132,8 @@ const employee = async (req, res) => {
     const skip = (page - 1) * limit; // Calculate the number of records to skip  
     //   const regnModels = new RegistrationModel();
     //   console.log(regnModels);
-    const data = await RegistrationModel.find().skip(skip).limit(Number(limit)); // Fetch with pagination  
+    const data = await EmpData.find().skip(skip).limit(Number(limit)); // Fetch with pagination  
+    // debugger;
     // If no data found, return an empty array (still 200 OK)
     if (data.length === 0) {
       return res.status(200).json([]);
@@ -151,7 +145,6 @@ const employee = async (req, res) => {
     res.status(500).json({ message: 'Error fetching data from Database', error: err.message });
   }
 };
-
 const editemployee = async (req, res) => {
   try {
     const { id } = req.body; // Assuming the employee ID is sent in the request body  
@@ -159,7 +152,7 @@ const editemployee = async (req, res) => {
       return res.status(400).json({ message: 'ID is required' }); // Check if ID is provided
     }
     // Find the employee by ID
-    const data = await RegistrationModel.findById(id);
+    const data = await EmpData.findById(id);
     if (!data) {
       return res.status(404).json({ message: 'Employee not found' }); // Return a not found message if no data is found
     }
@@ -174,30 +167,117 @@ const editemployee = async (req, res) => {
 /* Registration */
 
 const updateemployee = async (req, res) => {
-  const { id, name, empname, fname, mname, mobile, sid, sex, city, state, dob } = req.body.updateInfo;
-  // console.log(empname); 
-  // Check if all required fields are provided
-  if (!id || !empname || !fname || !mname || !mobile || !dob || !sex || !state || !city) {
-    return res.status(400).json({
-      message: 'All fields are required',
-      success: false,
-    });
-  }
   try {
-    // Find and update the user by their _id
-    const updatedUser = await RegistrationModel.findByIdAndUpdate(
-      id,
-      { name, empname, fname, mname, mobile, sid, sex, city, state, dob }, // Fields to update
-      { new: true } // This option returns the updated document
-    );
-    if (!updatedUser) {
-      res.status(301).json({ message: 'Employee Record Not Updated', success: false });
+    const employeeId = req.body.id; // Get employee ID from the request params
+
+    if (!employeeId) {
+      return res.status(400).json({ message: 'Employee ID is required', success: false });
     }
-    res.status(200).json({ message: 'Employee Record Updated', success: true });
-  } catch (err) {
-    res.status(500).json({ message: 'Failed to update record, Plese try again', success: false });
+
+    const { personalDetails, communicationDetails, educationDetails, professionalDetails } = req.body;
+
+    const photo = req.files['photo'] ? req.files['photo'][0] : null;
+    const resume = req.files['resume'] ? req.files['resume'][0] : null;
+
+    // Find the employee document
+    const existingEmployee = await EmpData.findById(employeeId);
+    if (!existingEmployee) {
+      return res.status(404).json({ message: 'Employee not found', success: false });
+    }
+
+    // Build the updated data object
+    const updatedData = {
+      ...(personalDetails && { personalDetails: JSON.parse(personalDetails) }),
+      ...(communicationDetails && { communicationDetails: JSON.parse(communicationDetails) }),
+      ...(educationDetails && { educationDetails: JSON.parse(educationDetails) }),
+      professionalDetails: {
+        ...existingEmployee.professionalDetails,
+        ...(professionalDetails && JSON.parse(professionalDetails)),
+        ...(photo && { photo: photo.path }), // Save only the file path
+        ...(resume && { resume: resume.path }), // Save only the file path
+      },
+    };
+
+    const updatedEmployee = await EmpData.findByIdAndUpdate(
+      employeeId,
+      updatedData,
+      { new: true }
+    );
+
+    res.status(200).json({
+      message: 'Employee data updated successfully',
+      success: true,
+      resdata: updatedEmployee,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error updating Employee data', error: error.message });
   }
-}
+};
+
+
+
+
+
+// Form submission endpoint
+const employees = async (req, res) => {
+  try {
+    // Extract form data and files
+    const { personalDetails, communicationDetails, educationDetails, professionalDetails } = req.body;
+    const photo = req.files?.['photo']?.[0];
+    const resume = req.files?.['resume']?.[0];
+
+    // Validate required files
+    if (!photo && !resume) {
+      return res.status(400).json({ message: 'Photo and Resume are required', success: false });
+    }
+    if (!photo) {
+      return res.status(400).json({ message: 'Photo is required', success: false });
+    }
+    if (!resume) {
+      return res.status(400).json({ message: 'Resume is required', success: false });
+    }
+
+    // Parse JSON fields
+    let parsedPersonalDetails, parsedCommunicationDetails, parsedEducationDetails, parsedProfessionalDetails;
+    try {
+      parsedPersonalDetails = JSON.parse(personalDetails);
+      parsedCommunicationDetails = JSON.parse(communicationDetails);
+      parsedEducationDetails = JSON.parse(educationDetails);
+      parsedProfessionalDetails = JSON.parse(professionalDetails);
+    } catch (err) {
+      return res.status(400).json({ message: 'Invalid JSON format in form data', success: false });
+    }
+
+    // Create new employee data
+    const newFormData = new EmpData({
+      personalDetails: parsedPersonalDetails,
+      communicationDetails: parsedCommunicationDetails,
+      educationDetails: parsedEducationDetails,
+      professionalDetails: {
+        ...parsedProfessionalDetails,
+        photo: photo.path, // Save file path
+        resume: resume.path, // Save file path
+      },
+    });
+
+    // Save to MongoDB
+    await newFormData.save();
+    res.status(201).json({ message: 'Employee Form submitted successfully', success: true });
+  } catch (error) {
+    console.error('Error submitting employee data:', error);
+    res.status(500).json({ message: 'Error submitting Employee data', error: error.message });
+  }
+};
+
+
+
+// Export the function if needed
+// module.exports = employees;
+
+// Attach it to a route
+// app.post('/api/forms', upload.fields([{ name: 'photo' }, { name: 'resume' }]), employees);
+
 
 module.exports = {
   signup,
@@ -205,5 +285,6 @@ module.exports = {
   registration,
   employee,
   editemployee,
-  updateemployee
+  updateemployee,
+  employees
 }

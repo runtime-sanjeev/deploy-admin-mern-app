@@ -1,4 +1,4 @@
-const { signup, login, registration, employee, editemployee, updateemployee } = require('../Controllers/AuthController');
+const { signup, login, registration, employee, editemployee, updateemployee, employees } = require('../Controllers/AuthController');
 const { signupValidation, loginValidation } = require('../Middlewares/AuthValidation');
 const upload = require('../Controllers/upload'); // Import the upload middleware
 const router = require('express').Router();
@@ -19,6 +19,11 @@ router.get('/employee', employee);  // Use GET instead of POST
 router.post('/editemployee', editemployee);  
 
 // Edit Employee route: Post employee data 
-router.post('/updateemployee', updateemployee);  
+// router.post('/updateemployee', updateemployee);  
+
+router.post('/updateemployee', upload, updateemployee);  
+
+// Edit Employee route: Post employee data 
+router.post('/employees',upload, employees);  
 
 module.exports = router;
