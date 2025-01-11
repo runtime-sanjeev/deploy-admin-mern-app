@@ -4,6 +4,7 @@ import Signup from "./pages/Signup";
 import Registration from "./pages/Registration";
 import Employee from "./pages/Employee";
 import Report from "./pages/Report";
+import Employees from "./pages/Employees";
 import Dashboard from "./pages/Dashboard";
 // import { useState } from "react";
 // import RefreshHandler from "./RefreshHandler";
@@ -23,6 +24,7 @@ function App() {
        <Route path="/signup" element={<Signup />}></Route>
        <Route path="/registration" element={<Registration />}></Route>
        <Route path="/employee" element={<Employee />}></Route>
+       <Route path="/employees" element={<Employees />}></Route>
        <Route path="/dashboard" element={<Dashboard />}></Route>
 
       </Routes>
