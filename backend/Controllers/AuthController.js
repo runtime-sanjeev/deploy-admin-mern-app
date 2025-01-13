@@ -226,9 +226,7 @@ const employees = async (req, res) => {
     const { personalDetails, communicationDetails, educationDetails, professionalDetails } = req.body;
     const photo = req.files?.['photo']?.[0];
     const resume = req.files?.['resume']?.[0];
-console.log(photo);
-console.log(resume);
-debugger;
+
     // Validate required files
     if (!photo && !resume) {
       return res.status(400).json({ message: 'Photo and Resume are required', success: false });
@@ -265,8 +263,6 @@ debugger;
 
     // Save to MongoDB
     await newFormData.save();
-    console.log(newFormData);
-    debugger;
     res.status(201).json({ message: 'Employee Form submitted successfully', success: true });
   } catch (error) {
     console.error('Error submitting employee data:', error);
