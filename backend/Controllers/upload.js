@@ -54,7 +54,7 @@ const storage = multer.diskStorage({
 
 // Initialize multer with storage configuration
 const upload = multer({ storage: storage }).fields([
-  { name: 'file', maxCount: 1 },  // Document file
+  { name: 'resume', maxCount: 1 },  // Document file
   { name: 'photo', maxCount: 1 }  // Profile photo
 ]);
 
