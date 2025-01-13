@@ -28,30 +28,11 @@ app.use(express.json()); // Middleware to parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parses URL-encoded payloads
 app.use('/auth', AuthRouter);
 app.use('/public', express.static(path.join(__dirname, 'public')));
-// // Serve files from `/tmp/document` directory
-// app.use('/public/document', express.static('/tmp/document'));
+// Serve files from `/tmp/document` directory
+app.use('/public/document', express.static('/tmp/document'));
 
-// // Serve files from `/tmp/photo` directory
-// app.use('/public/photo', express.static('/tmp/photo'));
-
-// Dynamic routes to serve `/tmp` files
-app.get('/public/document/:filename', (req, res) => {
-    const { filename } = req.params;
-    const filePath = path.join('/tmp/document', filename);
-    if (!fs.existsSync(filePath)) {
-        return res.status(404).json({ message: 'File not found' });
-    }
-    res.sendFile(filePath);
-});
-
-app.get('/public/photo/:filename', (req, res) => {
-    const { filename } = req.params;
-    const filePath = path.join('/tmp/photo', filename);
-    if (!fs.existsSync(filePath)) {
-        return res.status(404).json({ message: 'File not found' });
-    }
-    res.sendFile(filePath);
-});
+// Serve files from `/tmp/photo` directory
+app.use('/public/photo', express.static('/tmp/photo'));
 app.listen(PORT, ()=> {
     console.log(`server is runing on ${PORT}`);
 })
