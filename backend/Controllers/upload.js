@@ -42,7 +42,7 @@ const path = require('path');
  
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dir = file.fieldname === 'file' ? '/tmp/document/' : '/tmp/photo/';
+    const dir = file.fieldname === 'resume' ? '/tmp/document/' : '/tmp/photo/';
     fs.mkdirSync(dir, { recursive: true });
     cb(null, dir);
   },
