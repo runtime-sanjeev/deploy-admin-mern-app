@@ -206,7 +206,7 @@ function Employees() {
                     console.log(message);
                     setTimeout(() => {
                         navigate('/employee');
-                    }, 1500);
+                    }, 5000);
                 }else if (error) {
                         const details = error?.details[0].message;
                         console.log(details);
