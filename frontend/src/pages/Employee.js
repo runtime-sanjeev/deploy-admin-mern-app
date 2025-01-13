@@ -454,6 +454,9 @@ const onFileChange = (e, category) => {
                 paginationPerPage={10}
                 responsive
                 highlightOnHover
+                defaultPageSize={10}
+                pageSizeOptions={[10,20,30,40,50]}
+                showPaginationBottom={true}
               />
 
             {selectedEmployee && (
