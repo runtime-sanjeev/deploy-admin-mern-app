@@ -272,7 +272,8 @@ const employees = async (req, res) => {
         resume: resume.path, // Save file path
       },
     });
-
+console.log(newFormData);
+debugger;
     // Save to MongoDB
     await newFormData.save();
     res.status(201).json({ message: 'Employee Form submitted successfully', success: true });
