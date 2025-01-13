@@ -414,7 +414,7 @@ const onFileChange = (e, category) => {
                     cell: (row) => (
                       <button
                         type="button"
-                        onClick={() => window.open(`https://deploy-admin-mern-app-1.vercel.app/${row.professionalDetails.resume}`, '_blank')}
+                        onClick={() => window.open(`https://deploy-admin-mern-app-1.vercel.app${row.professionalDetails.resume}`, '_blank')}
                         className="focus:outline-none text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5"
                       >
                         View Document
@@ -427,7 +427,7 @@ const onFileChange = (e, category) => {
                     cell: (row) => (
                       <button
                         type="button"
-                        onClick={() => window.open(`https://deploy-admin-mern-app-1.vercel.app/${row.professionalDetails.photo}`, '_blank')}
+                        onClick={() => window.open(`https://deploy-admin-mern-app-1.vercel.app${row.professionalDetails.photo}`, '_blank')}
                         className="focus:outline-none text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5"
                       >
                         View Image
@@ -678,7 +678,7 @@ const onFileChange = (e, category) => {
                                         />
                                       ) : selectedEmployee?.professionalDetails?.photo ? (
                                         <img
-                                          src={`https://deploy-admin-mern-app-1.vercel.app/${selectedEmployee.professionalDetails.photo}`} // Fallback to existing photo
+                                          src={`https://deploy-admin-mern-app-1.vercel.app${selectedEmployee.professionalDetails.photo}`} // Fallback to existing photo
                                           alt="Preview"
                                           style={{ width: "200px" }}
                                           className="w-32 h-32 object-cover rounded-md border border-gray-200"
@@ -708,7 +708,7 @@ const onFileChange = (e, category) => {
                                           type="button"
                                           onClick={() =>
                                             window.open(
-                                              `https://deploy-admin-mern-app-1.vercel.app/${selectedEmployee.professionalDetails.resume}`,
+                                              `https://deploy-admin-mern-app-1.vercel.app${selectedEmployee.professionalDetails.resume}`,
                                               '_blank'
                                             )
                                           }
