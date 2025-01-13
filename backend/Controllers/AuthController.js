@@ -221,6 +221,7 @@ const updateemployee = async (req, res) => {
 
 // Form submission endpoint
 const employees = async (req, res) => {
+  console.log(req);
   try {
     // Extract form data and files
     const { personalDetails, communicationDetails, educationDetails, professionalDetails } = req.body;
