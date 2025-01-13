@@ -32,7 +32,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/public/document', express.static('/tmp/document'));
 
 // Serve files from `/tmp/photo` directory
-app.use('/public/photo', express.static('/tmp/photo'));
+app.use('/public/photo', express.static('/'));
 app.listen(PORT, ()=> {
     console.log(`server is runing on ${PORT}`);
 })
