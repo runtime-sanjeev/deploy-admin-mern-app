@@ -221,35 +221,22 @@ const updateemployee = async (req, res) => {
 
 // Form submission endpoint
 const employees = async (req, res) => {
-  console.log(req);
   try {
     // Extract form data and files
     const { personalDetails, communicationDetails, educationDetails, professionalDetails } = req.body;
-    // const photo = req.files?.['photo']?.[0];
-    // const resume = req.files?.['resume']?.[0];
-
-    const resume = req.files?.resume ? req.files.file[0] : null;
-    // const photo = req.photo; 
-    const photo = req.files?.photo ? req.files.photo[0] : null;
-
-
-    if (!resume) {
-      return res.status(400).json({ message: 'No file uploaded', success: false });
-    }
-    if (!photo) {
-      return res.status(400).json({ message: 'No Image uploaded', success: false });
-    }
+    const photo = req.files?.['photo']?.[0];
+    const resume = req.files?.['resume']?.[0];
 
     // Validate required files
-    // if (!photo && !resume) {
-    //   return res.status(400).json({ message: 'Photo and Resume are required', success: false });
-    // }
-    // if (!photo) {
-    //   return res.status(400).json({ message: 'Photo is required', success: false });
-    // }
-    // if (!resume) {
-    //   return res.status(400).json({ message: 'Resume is required', success: false });
-    // }
+    if (!photo && !resume) {
+      return res.status(400).json({ message: 'Photo and Resume are required', success: false });
+    }
+    if (!photo) {
+      return res.status(400).json({ message: 'Photo is required', success: false });
+    }
+    if (!resume) {
+      return res.status(400).json({ message: 'Resume is required', success: false });
+    }
 
     // Parse JSON fields
     let parsedPersonalDetails, parsedCommunicationDetails, parsedEducationDetails, parsedProfessionalDetails;
@@ -273,8 +260,7 @@ const employees = async (req, res) => {
         resume: resume.path, // Save file path
       },
     });
-console.log(newFormData);
-debugger;
+
     // Save to MongoDB
     await newFormData.save();
     res.status(201).json({ message: 'Employee Form submitted successfully', success: true });
