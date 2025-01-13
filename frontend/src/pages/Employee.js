@@ -678,7 +678,7 @@ const onFileChange = (e, category) => {
                                         />
                                       ) : selectedEmployee?.professionalDetails?.photo ? (
                                         <img
-                                          src={`https://deploy-admin-mern-app-1.vercel.app/tmp${selectedEmployee.professionalDetails.photo}`} // Fallback to existing photo
+                                          src={`https://deploy-admin-mern-app-1.vercel.app/${selectedEmployee.professionalDetails.photo}`} // Fallback to existing photo
                                           alt="Preview"
                                           style={{ width: "200px" }}
                                           className="w-32 h-32 object-cover rounded-md border border-gray-200"
@@ -708,7 +708,7 @@ const onFileChange = (e, category) => {
                                           type="button"
                                           onClick={() =>
                                             window.open(
-                                              `https://deploy-admin-mern-app-1.vercel.app/tmp${selectedEmployee.professionalDetails.resume}`,
+                                              `https://deploy-admin-mern-app-1.vercel.app/${selectedEmployee.professionalDetails.resume}`,
                                               '_blank'
                                             )
                                           }

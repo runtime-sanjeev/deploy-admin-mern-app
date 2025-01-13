@@ -249,6 +249,10 @@ const employees = async (req, res) => {
       return res.status(400).json({ message: 'Invalid JSON format in form data', success: false });
     }
 
+    // Extract filenames from file paths
+    const photoFileName = photo.filename; // Assuming 'filename' contains just the name
+    const resumeFileName = resume.filename; // Assuming 'filename' contains just the name
+
     // Create new employee data
     const newFormData = new EmpData({
       personalDetails: parsedPersonalDetails,
@@ -256,11 +260,13 @@ const employees = async (req, res) => {
       educationDetails: parsedEducationDetails,
       professionalDetails: {
         ...parsedProfessionalDetails,
-        photo: photo.path, // Save file path
-        resume: resume.path, // Save file path
+        photo: photoFileName, // Save only the file name
+        resume: resumeFileName, // Save only the file name
       },
     });
-console.log(newFormData);
+
+    console.log(newFormData);
+
     // Save to MongoDB
     await newFormData.save();
     res.status(201).json({ message: 'Employee Form submitted successfully', success: true });
@@ -269,6 +275,7 @@ console.log(newFormData);
     res.status(500).json({ message: 'Error submitting Employee data', error: error.message });
   }
 };
+
 
 
 
