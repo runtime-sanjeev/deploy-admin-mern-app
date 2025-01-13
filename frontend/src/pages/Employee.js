@@ -450,13 +450,11 @@ const onFileChange = (e, category) => {
                   },
                 ]}
                 data={filteredData}
-                pagination
+                pagination={true}
                 paginationPerPage={10}
                 responsive
                 highlightOnHover
-                defaultPageSize={10}
-                pageSizeOptions={[10,20,30,40,50]}
-                showPaginationBottom={true}
+                
               />
 
             {selectedEmployee && (
