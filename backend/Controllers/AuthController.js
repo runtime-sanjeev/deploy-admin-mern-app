@@ -179,6 +179,10 @@ const updateemployee = async (req, res) => {
     const photo = req.files['photo'] ? req.files['photo'][0] : null;
     const resume = req.files['resume'] ? req.files['resume'][0] : null;
 
+    // Extract filenames from file paths
+    const photoFileName = photo.filename; // Assuming 'filename' contains just the name
+    const resumeFileName = resume.filename; // Assuming 'filename' contains just the name
+
     // Find the employee document
     const existingEmployee = await EmpData.findById(employeeId);
     if (!existingEmployee) {
@@ -193,8 +197,8 @@ const updateemployee = async (req, res) => {
       professionalDetails: {
         ...existingEmployee.professionalDetails,
         ...(professionalDetails && JSON.parse(professionalDetails)),
-        ...(photo && { photo: photo.path }), // Save only the file path
-        ...(resume && { resume: resume.path }), // Save only the file path
+        ...(photo && { photo: photoFileName }), // Save only the file path
+        ...(resume && { resume: resumeFileName }), // Save only the file path
       },
     };
 
