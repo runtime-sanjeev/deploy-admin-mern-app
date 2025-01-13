@@ -226,7 +226,8 @@ const employees = async (req, res) => {
     const { personalDetails, communicationDetails, educationDetails, professionalDetails } = req.body;
     const photo = req.files?.['photo']?.[0];
     const resume = req.files?.['resume']?.[0];
-
+console.log(req.body);
+debugger;
     // Validate required files
     if (!photo && !resume) {
       return res.status(400).json({ message: 'Photo and Resume are required', success: false });
