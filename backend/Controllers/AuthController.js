@@ -224,19 +224,31 @@ const employees = async (req, res) => {
   try {
     // Extract form data and files
     const { personalDetails, communicationDetails, educationDetails, professionalDetails } = req.body;
-    const photo = req.files?.['photo']?.[0];
-    const resume = req.files?.['resume']?.[0];
+    // const photo = req.files?.['photo']?.[0];
+    // const resume = req.files?.['resume']?.[0];
 
-    // Validate required files
-    if (!photo && !resume) {
-      return res.status(400).json({ message: 'Photo and Resume are required', success: false });
+    const resume = req.files?.resume ? req.files.file[0] : null;
+    // const photo = req.photo; 
+    const photo = req.files?.photo ? req.files.photo[0] : null;
+
+
+    if (!resume) {
+      return res.status(400).json({ message: 'No file uploaded', success: false });
     }
     if (!photo) {
-      return res.status(400).json({ message: 'Photo is required', success: false });
+      return res.status(400).json({ message: 'No Image uploaded', success: false });
     }
-    if (!resume) {
-      return res.status(400).json({ message: 'Resume is required', success: false });
-    }
+
+    // Validate required files
+    // if (!photo && !resume) {
+    //   return res.status(400).json({ message: 'Photo and Resume are required', success: false });
+    // }
+    // if (!photo) {
+    //   return res.status(400).json({ message: 'Photo is required', success: false });
+    // }
+    // if (!resume) {
+    //   return res.status(400).json({ message: 'Resume is required', success: false });
+    // }
 
     // Parse JSON fields
     let parsedPersonalDetails, parsedCommunicationDetails, parsedEducationDetails, parsedProfessionalDetails;
