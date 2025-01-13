@@ -5,6 +5,7 @@ const path = require('path');
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const dir = file.fieldname === 'resume' ? '/tmp/document/' : '/tmp/photo/';
+    console.log(dir);
     fs.mkdirSync(dir, { recursive: true });
     cb(null, dir);
   },
