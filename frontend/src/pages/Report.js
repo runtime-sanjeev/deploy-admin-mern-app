@@ -6,9 +6,9 @@ function Report() {
   return (
     <div>
     <Header/>
-      <div className='content-container'>
+      <div className='content-container '>
       <Sidebar/>
-      <aside className="main_content">
+      <aside className="main_content flex-1 p-4">
         <div className='reg_container'>
         <h1>Employee Reports</h1>
         <p>Comming Soon</p>

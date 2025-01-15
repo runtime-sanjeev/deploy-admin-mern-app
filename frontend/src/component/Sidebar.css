@@ -1,84 +1,86 @@
-
 .sidebar-container {
-    width: 250px;
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    height: 120vh;
+  /* width: 250px; */
+  width: 100%;
+  max-width: 250px;
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  /* height: 120vh; */
+  height: auto;
+}
+
+.sidebar-container p {
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  margin-bottom: 15px;
+}
+
+.sidebar-menu a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.sidebar-menu a:hover {
+  color: #2575fc;
+}
+
+.logout-button {
+  background-color: #d9534f;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 5px;
+}
+
+.logout-button:hover {
+  background-color: #c9302c;
+}
+
+@media (max-width: 768px) {
+  .sidebar-container {
+    width: 200px;
   }
-  
-  .sidebar-container p {
-    margin-bottom: 20px;
+
+  .main-content {
+    padding: 15px;
+  }
+
+  .header-container h1 {
+    font-size: 1.5rem;
+  }
+
+  .header-container p {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar-container {
+    display: none; /* Optional: hide sidebar for mobile */
+  }
+
+  .main-content {
+    padding: 10px;
+  }
+
+  .header-container h1 {
     font-size: 1.2rem;
-    font-weight: bold;
   }
+}
   
-  .sidebar-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .sidebar-menu li {
-    margin-bottom: 15px;
-  }
-  
-  .sidebar-menu a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s;
-  }
-  
-  .sidebar-menu a:hover {
-    color: #2575fc;
-  }
-
-  .logout-button {
-    background-color: #d9534f;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 1rem;
-    border-radius: 5px;
-  }
-  
-  .logout-button:hover {
-    background-color: #c9302c;
-  }
-
-  @media (max-width: 768px) {
-    .sidebar-container {
-      width: 200px;
-    }
-  
-    .main-content {
-      padding: 15px;
-    }
-  
-    .header-container h1 {
-      font-size: 1.5rem;
-    }
-  
-    .header-container p {
-      font-size: 0.9rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .sidebar-container {
-      display: none; /* Optional: hide sidebar for mobile */
-    }
-  
-    .main-content {
-      padding: 10px;
-    }
-  
-    .header-container h1 {
-      font-size: 1.2rem;
-    }
-  }
-    
